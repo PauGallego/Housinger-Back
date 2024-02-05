@@ -22,3 +22,34 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# Gradle files
+.gradle/
+build/
+
+# Ignore local configuration files for Gradle
+gradle-local.properties
+
+# Ignore idea folder
+.idea/
+
+# Ignore Eclipse project files
+.classpath
+.project
+.settings/
+
+# Ignore generated Gradle wrapper files
+gradle-wrapper.jar
+gradle-wrapper.properties
+
+# Ignore user-specific Gradle settings
+gradle.properties
+
+# Ignore Eclipse metadata
+.metadata/
+
+# Ignore local workspace state for Eclipse
+.snap/
+
+# Ignore resource directory with server configuration
+src/main/resources/application.properties
