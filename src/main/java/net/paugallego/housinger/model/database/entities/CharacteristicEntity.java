@@ -1,25 +1,26 @@
 package net.paugallego.housinger.model.database.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class ExampleEntity implements Serializable {
+public class CharacteristicEntity implements Serializable {
 
     @Id
     @GeneratedValue
     private Long id;
-    private String example1;
-    private Double example2;
-    private Boolean example3;
-    private String example4;
+    private String name;
+    private String icon;
+    private String description;
+
 }
+

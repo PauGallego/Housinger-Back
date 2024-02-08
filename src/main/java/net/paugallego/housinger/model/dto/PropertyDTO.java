@@ -1,12 +1,12 @@
-package net.paugallego.housinger.model.database.entities;
+package net.paugallego.housinger.model.dto;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.paugallego.housinger.model.database.entities.CharacteristicEntity;
+import net.paugallego.housinger.model.database.entities.UserEntity;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
@@ -14,22 +14,14 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class PropertyEntity implements Serializable {
+public class PropertyDTO {
 
     @Id
     @GeneratedValue
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private UserEntity user;
-    @Column(name = "user_id")
     private Long userId;
     private String address;
     private String type;
-    @ManyToMany
-    @JoinColumn(name = "characteristics_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private Set<CharacteristicEntity> characteristics;
-    @Column(name = "characteristics_id")
     private Long characteristicsID;
     private String calendar;
     private String description;
@@ -39,4 +31,3 @@ public class PropertyEntity implements Serializable {
     private List<String> normas;
     private String extraInfo;
 }
-

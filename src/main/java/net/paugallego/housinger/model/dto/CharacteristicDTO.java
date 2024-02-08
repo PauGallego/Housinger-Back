@@ -11,13 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class ExampleDTO {
-
+public class CharacteristicDTO {
     @Id
     @GeneratedValue
     private Long id;
-    private String example1;
-    private Double example2;
-    private Boolean example3;
-    private String example4;
+    private String name;
+    private String icon;
+    private String description;
 }
