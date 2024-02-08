@@ -19,6 +19,7 @@ public class PropertyDTOConverter extends AbstractDTOConverter<PropertyEntity, P
         entity.setExtraInfo(PropertyDTO.getExtraInfo());
         entity.setUserId(PropertyDTO.getUserId());
         entity.setNormas(PropertyDTO.getNormas());
+        entity.setId(PropertyDTO.getId());
 
         return entity;
     }
@@ -37,6 +38,7 @@ public class PropertyDTOConverter extends AbstractDTOConverter<PropertyEntity, P
         dto.setExtraInfo(entity.getExtraInfo());
         dto.setUserId(entity.getUserId());
         dto.setNormas(entity.getNormas());
+        dto.setId(entity.getId());
 
         return dto;
     }

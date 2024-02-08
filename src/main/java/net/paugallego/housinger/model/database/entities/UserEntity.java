@@ -1,12 +1,11 @@
 package net.paugallego.housinger.model.database.entities;
 
 import jakarta.annotation.Nullable;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -19,15 +18,17 @@ public class UserEntity implements Serializable {
     private Long id;
     private String name;
     private String surname;
-    @NonNull
+    @Column(nullable = false)
     private String mail;
-    @NonNull
+    @Column(nullable = false)
     private String username;
-    @NonNull
+    @Column(nullable = false)
     private String password;
     private String dni;
-    @Nullable
+    @Column(nullable = false)
     private String foto;
     private Boolean admin;
     private Boolean premium;
+    private Boolean isEnabled;
+
 }

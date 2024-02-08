@@ -13,6 +13,7 @@ public class CharacteristicDTOConverter extends AbstractDTOConverter<Characteris
         entity.setName(CharacteristicDTO.getName());
         entity.setIcon(CharacteristicDTO.getIcon());
         entity.setDescription(CharacteristicDTO.getDescription());
+        entity.setId(CharacteristicDTO.getId());
 
         return entity;
     }
@@ -24,6 +25,7 @@ public class CharacteristicDTOConverter extends AbstractDTOConverter<Characteris
         dto.setName(entity.getName());
         dto.setIcon(entity.getIcon());
         dto.setDescription(entity.getDescription());
+        dto.setId(entity.getId());
 
 
         return dto;

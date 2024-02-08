@@ -40,6 +40,7 @@ public abstract class AbstractController<E, DTO, CS extends AbstractCRUDService<
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiErrorEnum.INDETERMINATE_ERROR);
         }
     }
@@ -50,12 +51,13 @@ public abstract class AbstractController<E, DTO, CS extends AbstractCRUDService<
             List<DTO> dtos = service.findAll();
             return ResponseEntity.status(HttpStatus.OK).body(dtos);
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiErrorEnum.INDETERMINATE_ERROR);
         }
     }
 
     @PostMapping("/save")
-    public ResponseEntity<?> save(DTO dto) {
+    public ResponseEntity<?> save(@RequestBody DTO dto) {
         try {
             if (dto == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiErrorEnum.BODY_IS_MISSING);
@@ -64,12 +66,13 @@ public abstract class AbstractController<E, DTO, CS extends AbstractCRUDService<
                 return ResponseEntity.status(HttpStatus.CREATED).body(savedDto);
             }
         } catch (Exception e) {
+            System.out.println("Received DTO for update operation: " + dto.toString());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiErrorEnum.INDETERMINATE_ERROR);
         }
     }
 
     @PostMapping("/save/all")
-    public ResponseEntity<?> saveAll(List<DTO> dtos) {
+    public ResponseEntity<?> saveAll(@RequestBody List<DTO> dtos) {
         try {
             if (dtos.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiErrorEnum.BODY_IS_MISSING);
@@ -78,26 +81,31 @@ public abstract class AbstractController<E, DTO, CS extends AbstractCRUDService<
                 return ResponseEntity.status(HttpStatus.CREATED).body(savedDtos);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiErrorEnum.INDETERMINATE_ERROR);
         }
     }
 
     @PutMapping("/save")
-    public ResponseEntity<?> update(DTO dto) {
+    public ResponseEntity<?> update(@RequestBody DTO dto) {
         try {
             if (dto == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiErrorEnum.BODY_IS_MISSING);
             } else {
+
+
                 DTO savedDto = service.save(dto);
                 return ResponseEntity.status(HttpStatus.CREATED).body(savedDto);
             }
         } catch (Exception e) {
+
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiErrorEnum.INDETERMINATE_ERROR);
         }
     }
 
     @PutMapping("/save/all")
-    public ResponseEntity<?> updateAll(List<DTO> dtos) {
+    public ResponseEntity<?> updateAll(@RequestBody List<DTO> dtos) {
         try {
             if (dtos.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiErrorEnum.BODY_IS_MISSING);
@@ -106,6 +114,8 @@ public abstract class AbstractController<E, DTO, CS extends AbstractCRUDService<
                 return ResponseEntity.status(HttpStatus.CREATED).body(savedDtos);
             }
         } catch (Exception e) {
+
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiErrorEnum.INDETERMINATE_ERROR);
         }
     }
@@ -120,6 +130,7 @@ public abstract class AbstractController<E, DTO, CS extends AbstractCRUDService<
                 return ResponseEntity.status(HttpStatus.CREATED).body(ApiErrorEnum.NO_ERROR);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiErrorEnum.INDETERMINATE_ERROR);
         }
     }
@@ -134,6 +145,7 @@ public abstract class AbstractController<E, DTO, CS extends AbstractCRUDService<
                 return ResponseEntity.status(HttpStatus.OK).body(ApiErrorEnum.NO_ERROR);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiErrorEnum.INDETERMINATE_ERROR);
         }
     }

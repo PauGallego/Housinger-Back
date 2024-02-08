@@ -15,6 +15,7 @@ public class ReviewDTOConverter extends AbstractDTOConverter<ReviewEntity, Revie
         entity.setReviewUserId(reviewDTO.getReviewUserId());
         entity.setReviewPropertyid(reviewDTO.getReviewPropertyid());
         entity.setStarts(reviewDTO.getStarts());
+        entity.setId(reviewDTO.getId());
 
         return entity;
     }
@@ -28,6 +29,7 @@ public class ReviewDTOConverter extends AbstractDTOConverter<ReviewEntity, Revie
         dto.setReviewUserId(entity.getReviewUserId());
         dto.setReviewPropertyid(entity.getReviewPropertyid());
         dto.setStarts(entity.getStarts());
+        dto.setId(entity.getId());
 
         return dto;
     }

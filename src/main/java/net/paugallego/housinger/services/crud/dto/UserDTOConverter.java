@@ -15,6 +15,12 @@ public class UserDTOConverter extends AbstractDTOConverter<UserEntity, UserDTO> 
         entity.setMail(userDTO.getMail());
         entity.setUsername(userDTO.getUsername());
         entity.setFoto(userDTO.getFoto());
+        entity.setAdmin(userDTO.getAdmin());
+        entity.setPremium(userDTO.getPremium());
+        entity.setPassword(userDTO.getPassword());
+        entity.setDni(userDTO.getDni());
+        entity.setIsEnabled(userDTO.getIsEnabled());
+        entity.setId(userDTO.getId());
 
         return entity;
     }
@@ -28,7 +34,12 @@ public class UserDTOConverter extends AbstractDTOConverter<UserEntity, UserDTO> 
         dto.setMail(entity.getMail());
         dto.setUsername(entity.getUsername());
         dto.setFoto(entity.getFoto());
-
+        dto.setAdmin(entity.getAdmin());
+        dto.setPremium(entity.getPremium());
+        dto.setPassword(entity.getPassword());
+        dto.setDni(entity.getDni());
+        dto.setIsEnabled(entity.getIsEnabled());
+        dto.setId(entity.getId());
 
         return dto;
     }

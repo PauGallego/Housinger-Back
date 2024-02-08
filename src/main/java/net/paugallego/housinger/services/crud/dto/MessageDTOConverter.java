@@ -14,6 +14,7 @@ public class MessageDTOConverter extends AbstractDTOConverter<MessageEntity, Mes
         entity.setDate(MessageDTO.getDate());
         entity.setUserReceiveId(MessageDTO.getUserReceiveId());
         entity.setUserSendId(MessageDTO.getUserSendId());
+        entity.setId(MessageDTO.getId());
 
         return entity;
     }
@@ -27,6 +28,7 @@ public class MessageDTOConverter extends AbstractDTOConverter<MessageEntity, Mes
         dto.setDate(entity.getDate());
         dto.setUserReceiveId(entity.getUserReceiveId());
         dto.setUserSendId(entity.getUserSendId());
+        dto.setId(entity.getId());
 
         return dto;
     }
