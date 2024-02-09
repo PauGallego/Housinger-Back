@@ -18,9 +18,10 @@ public class MessageEntity implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
-    private Date date;
     @ElementCollection
     private List<String> message;
+    @ElementCollection
+    private List<Date> date;
     @ManyToOne
     @JoinColumn(name = "userSend_id", referencedColumnName = "id", insertable = false, updatable = false)
     private UserEntity userSend;

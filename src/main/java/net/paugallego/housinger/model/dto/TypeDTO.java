@@ -1,6 +1,5 @@
 package net.paugallego.housinger.model.dto;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class CharacteristicDTO {
+public class TypeDTO {
     @Id
     @GeneratedValue
     private Long id;

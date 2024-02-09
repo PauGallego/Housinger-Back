@@ -24,13 +24,18 @@ public class PropertyEntity implements Serializable {
     private UserEntity user;
     @Column(name = "user_id")
     private Long userId;
+    @Column(nullable = false, unique = true)
     private String address;
-    private String type;
+    @ManyToOne
+    @JoinColumn(name = "type_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private TypeEntity type;
+    @Column(name = "type_id")
+    private Long typeId;
     @ManyToMany
     @JoinColumn(name = "characteristics_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Set<CharacteristicEntity> characteristics;
     @Column(name = "characteristics_id")
-    private Long characteristicsID;
+    private Long characteristicsId;
     private String calendar;
     private String description;
     @ElementCollection

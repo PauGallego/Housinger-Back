@@ -9,7 +9,7 @@ import net.paugallego.housinger.model.database.entities.UserEntity;
 import java.util.Date;
 import java.util.List;
 
-@Entity
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -19,7 +19,8 @@ public class MessageDTO {
     @Id
     @GeneratedValue
     private Long id;
-    private Date date;
+    @ElementCollection
+    private List<Date> date;
     @ElementCollection
     private List<String> message;
     private Long userSendId;

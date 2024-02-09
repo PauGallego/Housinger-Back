@@ -10,7 +10,7 @@ import net.paugallego.housinger.model.database.entities.UserEntity;
 import java.util.List;
 import java.util.Set;
 
-@Entity
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -22,7 +22,8 @@ public class PropertyDTO {
     private Long userId;
     private String address;
     private String type;
-    private Long characteristicsID;
+    private Long characteristicsId;
+    private Long typeId;
     private String calendar;
     private String description;
     @ElementCollection

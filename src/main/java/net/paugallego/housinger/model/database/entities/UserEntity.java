@@ -18,17 +18,20 @@ public class UserEntity implements Serializable {
     private Long id;
     private String name;
     private String surname;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String mail;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
     @Column(nullable = false)
     private String password;
+    @Column(nullable = false, unique = true)
     private String dni;
-    @Column(nullable = false)
     private String foto;
+    @Column(columnDefinition = "boolean default false")
     private Boolean admin;
+    @Column(columnDefinition = "boolean default false")
     private Boolean premium;
+    @Column(columnDefinition = "boolean default false")
     private Boolean isEnabled;
 
 }

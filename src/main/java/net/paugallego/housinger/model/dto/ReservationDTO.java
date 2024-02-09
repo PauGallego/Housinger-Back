@@ -9,7 +9,7 @@ import net.paugallego.housinger.model.database.entities.UserEntity;
 
 import java.util.Date;
 
-@Entity
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
