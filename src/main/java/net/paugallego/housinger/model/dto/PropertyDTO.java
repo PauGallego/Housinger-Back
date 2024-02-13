@@ -24,7 +24,7 @@ public class PropertyDTO {
     private String type;
     private Long characteristicsId;
     private Long typeId;
-    private String calendar;
+    private Long calendarId;
     private String description;
     @ElementCollection
     private List<String> fotos;

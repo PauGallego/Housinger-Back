@@ -12,7 +12,7 @@ public class PropertyDTOConverter extends AbstractDTOConverter<PropertyEntity, P
 
         entity.setAddress(PropertyDTO.getAddress());
         entity.setDescription(PropertyDTO.getDescription());
-        entity.setCalendar(PropertyDTO.getCalendar());
+        entity.setCalendarId(PropertyDTO.getCalendarId());
         entity.setFotos(PropertyDTO.getFotos());
         entity.setTypeId(PropertyDTO.getTypeId());
         entity.setCharacteristicsId(PropertyDTO.getCharacteristicsId());
@@ -31,7 +31,7 @@ public class PropertyDTOConverter extends AbstractDTOConverter<PropertyEntity, P
 
         dto.setAddress(entity.getAddress());
         dto.setDescription(entity.getDescription());
-        dto.setCalendar(entity.getCalendar());
+        dto.setCalendarId(entity.getCalendarId());
         dto.setFotos(entity.getFotos());
         dto.setTypeId(entity.getTypeId());
         dto.setCharacteristicsId(entity.getCharacteristicsId());

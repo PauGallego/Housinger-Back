@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.paugallego.housinger.model.database.entities.UserEntity;
 
 import java.util.Date;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class MessageDTO {
+public class ChatDTO {
 
 
     @Id

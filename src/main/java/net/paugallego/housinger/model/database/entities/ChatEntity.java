@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class MessageEntity implements Serializable {
+public class ChatEntity implements Serializable {
 
     @Id
     @GeneratedValue

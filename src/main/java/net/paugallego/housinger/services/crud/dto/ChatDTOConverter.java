@@ -1,14 +1,14 @@
 package net.paugallego.housinger.services.crud.dto;
 
-import net.paugallego.housinger.model.database.entities.MessageEntity;
-import net.paugallego.housinger.model.dto.MessageDTO;
+import net.paugallego.housinger.model.database.entities.ChatEntity;
+import net.paugallego.housinger.model.dto.ChatDTO;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MessageDTOConverter extends AbstractDTOConverter<MessageEntity, MessageDTO> {
+public class ChatDTOConverter extends AbstractDTOConverter<ChatEntity, ChatDTO> {
     @Override
-    public MessageEntity convertFromDTO(MessageDTO MessageDTO) {
-        MessageEntity entity = new MessageEntity();
+    public ChatEntity convertFromDTO(ChatDTO MessageDTO) {
+        ChatEntity entity = new ChatEntity();
 
         entity.setMessage(MessageDTO.getMessage());
         entity.setDate(MessageDTO.getDate());
@@ -20,8 +20,8 @@ public class MessageDTOConverter extends AbstractDTOConverter<MessageEntity, Mes
     }
 
     @Override
-    public MessageDTO convertFromEntity(MessageEntity entity) {
-        MessageDTO dto = new MessageDTO();
+    public ChatDTO convertFromEntity(ChatEntity entity) {
+        ChatDTO dto = new ChatDTO();
 
 
         dto.setMessage(entity.getMessage());

@@ -36,12 +36,16 @@ public class PropertyEntity implements Serializable {
     private Set<CharacteristicEntity> characteristics;
     @Column(name = "characteristics_id")
     private Long characteristicsId;
-    private String calendar;
     private String description;
     @ElementCollection
     private List<String> fotos;
     @ElementCollection
     private List<String> normas;
     private String extraInfo;
+    @OneToOne
+    @JoinColumn(name = "calendar_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private CalendarEntity calendar;
+    @Column(name = "calendar_id")
+    private Long calendarId;
 }
 
