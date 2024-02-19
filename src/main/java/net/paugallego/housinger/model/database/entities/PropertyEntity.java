@@ -47,5 +47,10 @@ public class PropertyEntity implements Serializable {
     private CalendarEntity calendar;
     @Column(name = "calendar_id")
     private Long calendarId;
+    @OneToMany
+    @JoinColumn(name = "beds_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Set<BedEntity> beds;
+    @Column(name = "beds_id")
+    private Long bedsId;
 }
 
