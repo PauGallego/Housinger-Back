@@ -21,13 +21,9 @@ public class ReservationEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "reservationUser_id", referencedColumnName = "id", insertable = false, updatable = false)
     private UserEntity reservationUser;
-    @Column(name = "reservationUser_id")
-    private Long reservationUserId;
     @ManyToOne
     @JoinColumn(name = "reservationProperty_id", referencedColumnName = "id", insertable = false, updatable = false)
     private PropertyEntity reservationProperty;
-    @Column(name = "reservationProperty_id")
-    private Long reservationPropertyId;
     private Date dateStart;
     private Date dateEnd;
 

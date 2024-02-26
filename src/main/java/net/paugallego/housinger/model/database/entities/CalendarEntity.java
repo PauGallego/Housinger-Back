@@ -24,6 +24,7 @@ public class CalendarEntity implements Serializable {
     @ElementCollection
     private List<Date> reservedDates;
     @OneToOne(mappedBy = "calendar")
+    @JoinColumn(name = "property_id", nullable = false , insertable = false, updatable = false)
     private PropertyEntity property;
 }
 

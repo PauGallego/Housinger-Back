@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.paugallego.housinger.model.database.entities.CharacteristicEntity;
-import net.paugallego.housinger.model.database.entities.UserEntity;
+import net.paugallego.housinger.model.database.entities.*;
 
 import java.util.List;
 import java.util.Set;
@@ -19,12 +18,11 @@ public class PropertyDTO {
     @Id
     @GeneratedValue
     private Long id;
-    private Long userId;
+    private UserEntity user;
     private String address;
-    private String type;
-    private Long characteristicsId;
-    private Long typeId;
-    private Long calendarId;
+    private TypeEntity type;
+    private Set<CharacteristicEntity> characteristics;
+    private CalendarEntity calendar;
     private String description;
     @ElementCollection
     private List<String> fotos;

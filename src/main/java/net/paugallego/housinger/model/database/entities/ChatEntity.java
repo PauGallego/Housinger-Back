@@ -25,13 +25,9 @@ public class ChatEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "userSend_id", referencedColumnName = "id", insertable = false, updatable = false)
     private UserEntity userSend;
-    @Column(name = "userSend_id")
-    private Long userSendId;
     @ManyToOne
     @JoinColumn(name = "userReceive_id", referencedColumnName = "id", insertable = false, updatable = false)
     private UserEntity userReceive;
-    @Column(name = "userReceive_id")
-    private Long userReceiveId;
 
 
 

@@ -18,8 +18,8 @@ public class ReviewDTO {
     @Id
     @GeneratedValue
     private Long id;
-    private Long reviewUserId;
-    private Long reviewPropertyid;
+    private UserEntity reviewUser;
+    private PropertyEntity reviewProperty;
     private String description;
     private Date date;
     private Float starts;

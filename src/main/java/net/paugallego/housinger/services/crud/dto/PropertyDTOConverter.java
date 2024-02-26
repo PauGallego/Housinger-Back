@@ -12,12 +12,12 @@ public class PropertyDTOConverter extends AbstractDTOConverter<PropertyEntity, P
 
         entity.setAddress(PropertyDTO.getAddress());
         entity.setDescription(PropertyDTO.getDescription());
-        entity.setCalendarId(PropertyDTO.getCalendarId());
+        entity.setCalendar(PropertyDTO.getCalendar());
         entity.setFotos(PropertyDTO.getFotos());
-        entity.setTypeId(PropertyDTO.getTypeId());
-        entity.setCharacteristicsId(PropertyDTO.getCharacteristicsId());
+        entity.setType(PropertyDTO.getType());
+        entity.setCharacteristics(PropertyDTO.getCharacteristics());
         entity.setExtraInfo(PropertyDTO.getExtraInfo());
-        entity.setUserId(PropertyDTO.getUserId());
+        entity.setUser(PropertyDTO.getUser());
         entity.setNormas(PropertyDTO.getNormas());
         entity.setId(PropertyDTO.getId());
 
@@ -31,14 +31,14 @@ public class PropertyDTOConverter extends AbstractDTOConverter<PropertyEntity, P
 
         dto.setAddress(entity.getAddress());
         dto.setDescription(entity.getDescription());
-        dto.setCalendarId(entity.getCalendarId());
+        dto.setCalendar(entity.getCalendar());
         dto.setFotos(entity.getFotos());
-        dto.setTypeId(entity.getTypeId());
-        dto.setCharacteristicsId(entity.getCharacteristicsId());
+        dto.setType(entity.getType());
+        dto.setCharacteristics(entity.getCharacteristics());
         dto.setExtraInfo(entity.getExtraInfo());
-        dto.setUserId(entity.getUserId());
+        dto.setUser(entity.getUser());
         dto.setNormas(entity.getNormas());
-        dto.setId(entity.getId());
+        dto.setId(entity.getId());;
 
         return dto;
     }

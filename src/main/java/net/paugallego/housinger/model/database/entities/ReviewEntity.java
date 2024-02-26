@@ -20,13 +20,9 @@ public class ReviewEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "reviewUser_id", referencedColumnName = "id", insertable = false, updatable = false)
     private UserEntity reviewUser;
-    @Column(name = "reviewUser_id")
-    private Long reviewUserId;
     @ManyToOne
     @JoinColumn(name = "reviewProperty_id", referencedColumnName = "id", insertable = false, updatable = false)
     private PropertyEntity reviewProperty;
-    @Column(name = "reviewProperty_id")
-    private Long reviewPropertyid;
     private String description;
     private Date date;
     private Float starts;

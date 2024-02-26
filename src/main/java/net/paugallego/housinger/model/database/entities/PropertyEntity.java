@@ -22,20 +22,14 @@ public class PropertyEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
     private UserEntity user;
-    @Column(name = "user_id")
-    private Long userId;
     @Column(nullable = false, unique = true)
     private String address;
     @ManyToOne
     @JoinColumn(name = "type_id", referencedColumnName = "id", insertable = false, updatable = false)
     private TypeEntity type;
-    @Column(name = "type_id")
-    private Long typeId;
     @ManyToMany
     @JoinColumn(name = "characteristics_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Set<CharacteristicEntity> characteristics;
-    @Column(name = "characteristics_id")
-    private Long characteristicsId;
     private String description;
     @ElementCollection
     private List<String> fotos;
@@ -43,14 +37,7 @@ public class PropertyEntity implements Serializable {
     private List<String> normas;
     private String extraInfo;
     @OneToOne
-    @JoinColumn(name = "calendar_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "calendar_id", referencedColumnName = "id" , insertable = false, updatable = false)
     private CalendarEntity calendar;
-    @Column(name = "calendar_id")
-    private Long calendarId;
-    @OneToMany
-    @JoinColumn(name = "beds_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private Set<BedEntity> beds;
-    @Column(name = "beds_id")
-    private Long bedsId;
 }
 

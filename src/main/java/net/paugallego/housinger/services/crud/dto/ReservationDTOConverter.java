@@ -12,8 +12,8 @@ public class ReservationDTOConverter extends AbstractDTOConverter<ReservationEnt
 
         entity.setDateEnd(ReservationDTO.getDateEnd());
         entity.setDateStart(ReservationDTO.getDateStart());
-        entity.setReservationUserId(ReservationDTO.getReservationUserId());
-        entity.setReservationPropertyId(ReservationDTO.getReservationPropertyId());
+        entity.setReservationUser(ReservationDTO.getReservationUser());
+        entity.setReservationProperty(ReservationDTO.getReservationProperty());
         entity.setId(ReservationDTO.getId());
 
         return entity;
@@ -26,8 +26,8 @@ public class ReservationDTOConverter extends AbstractDTOConverter<ReservationEnt
 
         dto.setDateEnd(entity.getDateEnd());
         dto.setDateStart(entity.getDateStart());
-        dto.setReservationUserId(entity.getReservationUserId());
-        dto.setReservationPropertyId(entity.getReservationPropertyId());
+        dto.setReservationUser(entity.getReservationUser());
+        dto.setReservationProperty(entity.getReservationProperty());
         dto.setId(entity.getId());
 
 

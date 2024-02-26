@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.paugallego.housinger.model.database.entities.UserEntity;
 
 import java.util.Date;
 import java.util.List;
@@ -22,7 +23,7 @@ public class ChatDTO {
     private List<Date> date;
     @ElementCollection
     private List<String> message;
-    private Long userSendId;
-    private Long userReceiveId;
+    private UserEntity userSend;
+    private UserEntity userReceive;
 
 }

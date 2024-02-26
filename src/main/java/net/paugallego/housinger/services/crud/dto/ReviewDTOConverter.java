@@ -12,8 +12,8 @@ public class ReviewDTOConverter extends AbstractDTOConverter<ReviewEntity, Revie
 
         entity.setDate(reviewDTO.getDate());
         entity.setDescription(reviewDTO.getDescription());
-        entity.setReviewUserId(reviewDTO.getReviewUserId());
-        entity.setReviewPropertyid(reviewDTO.getReviewPropertyid());
+        entity.setReviewUser(reviewDTO.getReviewUser());
+        entity.setReviewProperty(reviewDTO.getReviewProperty());
         entity.setStarts(reviewDTO.getStarts());
         entity.setId(reviewDTO.getId());
 
@@ -26,8 +26,8 @@ public class ReviewDTOConverter extends AbstractDTOConverter<ReviewEntity, Revie
 
         dto.setDate(entity.getDate());
         dto.setDescription(entity.getDescription());
-        dto.setReviewUserId(entity.getReviewUserId());
-        dto.setReviewPropertyid(entity.getReviewPropertyid());
+        dto.setReviewUser(entity.getReviewUser());
+        dto.setReviewProperty(entity.getReviewProperty());
         dto.setStarts(entity.getStarts());
         dto.setId(entity.getId());
 

@@ -12,8 +12,8 @@ public class ChatDTOConverter extends AbstractDTOConverter<ChatEntity, ChatDTO> 
 
         entity.setMessage(MessageDTO.getMessage());
         entity.setDate(MessageDTO.getDate());
-        entity.setUserReceiveId(MessageDTO.getUserReceiveId());
-        entity.setUserSendId(MessageDTO.getUserSendId());
+        entity.setUserReceive(MessageDTO.getUserReceive());
+        entity.setUserSend(MessageDTO.getUserSend());
         entity.setId(MessageDTO.getId());
 
         return entity;
@@ -26,8 +26,8 @@ public class ChatDTOConverter extends AbstractDTOConverter<ChatEntity, ChatDTO> 
 
         dto.setMessage(entity.getMessage());
         dto.setDate(entity.getDate());
-        dto.setUserReceiveId(entity.getUserReceiveId());
-        dto.setUserSendId(entity.getUserSendId());
+        dto.setUserReceive(entity.getUserReceive());
+        dto.setUserSend(entity.getUserSend());
         dto.setId(entity.getId());
 
         return dto;

@@ -18,8 +18,8 @@ public class ReservationDTO {
     @Id
     @GeneratedValue
     private Long id;
-    private Long reservationUserId;
-    private Long reservationPropertyId;
+    private UserEntity reservationUser;
+    private PropertyEntity reservationProperty;
     private Date dateStart;
     private Date dateEnd;
 }

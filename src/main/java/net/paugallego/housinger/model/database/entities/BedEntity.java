@@ -17,9 +17,10 @@ public class BedEntity {
     @ManyToOne
     @JoinColumn(name = "bedType_id", referencedColumnName = "id", insertable = false, updatable = false)
     private BedTypeEntity bedType;
-    @Column(name = "bedType_id")
-    private Long bedTypeId;
     private String number;
+    @ManyToOne
+    @JoinColumn(name = "property_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private PropertyEntity property;
 
 }
 

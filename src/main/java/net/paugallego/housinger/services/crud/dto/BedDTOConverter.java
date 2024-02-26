@@ -10,9 +10,10 @@ public class BedDTOConverter extends AbstractDTOConverter<BedEntity, BedDTO> {
     public BedEntity convertFromDTO(BedDTO BedDTO) {
         BedEntity entity = new BedEntity();
 
-        entity.setBedTypeId(BedDTO.getBedTypeId());
+        entity.setBedType(BedDTO.getBedType());
         entity.setNumber(BedDTO.getNumber());
         entity.setId(BedDTO.getId());
+        entity.setProperty(BedDTO.getProperty());
 
         return entity;
     }
@@ -21,9 +22,10 @@ public class BedDTOConverter extends AbstractDTOConverter<BedEntity, BedDTO> {
     public BedDTO convertFromEntity(BedEntity entity) {
         BedDTO dto = new BedDTO();
 
-        dto.setBedTypeId(entity.getBedTypeId());
+        dto.setBedType(entity.getBedType());
         dto.setNumber(entity.getNumber());
         dto.setId(entity.getId());
+        dto.setProperty(entity.getProperty());
 
         return dto;
     }
