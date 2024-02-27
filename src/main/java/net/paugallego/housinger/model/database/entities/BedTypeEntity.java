@@ -19,5 +19,7 @@ public class BedTypeEntity implements Serializable {
     private String name;
     private String icon;
 
+
+
 }
 

@@ -18,10 +18,10 @@ public class ReviewEntity implements Serializable {
     @GeneratedValue
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "reviewUser_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "reviewUser_id", referencedColumnName = "id")
     private UserEntity reviewUser;
     @ManyToOne
-    @JoinColumn(name = "reviewProperty_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "reviewProperty_id", referencedColumnName = "id")
     private PropertyEntity reviewProperty;
     private String description;
     private Date date;

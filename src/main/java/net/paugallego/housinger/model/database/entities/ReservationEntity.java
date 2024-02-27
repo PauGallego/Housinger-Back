@@ -19,10 +19,10 @@ public class ReservationEntity implements Serializable {
     @GeneratedValue
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "reservationUser_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "reservationUser_id", referencedColumnName = "id")
     private UserEntity reservationUser;
     @ManyToOne
-    @JoinColumn(name = "reservationProperty_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "reservationProperty_id", referencedColumnName = "id")
     private PropertyEntity reservationProperty;
     private Date dateStart;
     private Date dateEnd;

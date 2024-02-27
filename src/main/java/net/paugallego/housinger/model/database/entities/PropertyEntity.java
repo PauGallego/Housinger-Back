@@ -20,15 +20,15 @@ public class PropertyEntity implements Serializable {
     @GeneratedValue
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity user;
     @Column(nullable = false, unique = true)
     private String address;
     @ManyToOne
-    @JoinColumn(name = "type_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "type_id", referencedColumnName = "id")
     private TypeEntity type;
     @ManyToMany
-    @JoinColumn(name = "characteristics_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "characteristics_id", referencedColumnName = "id")
     private Set<CharacteristicEntity> characteristics;
     private String description;
     @ElementCollection

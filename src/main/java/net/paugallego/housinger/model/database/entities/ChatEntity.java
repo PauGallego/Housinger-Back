@@ -23,10 +23,10 @@ public class ChatEntity implements Serializable {
     @ElementCollection
     private List<Date> date;
     @ManyToOne
-    @JoinColumn(name = "userSend_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "userSend_id", referencedColumnName = "id")
     private UserEntity userSend;
     @ManyToOne
-    @JoinColumn(name = "userReceive_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "userReceive_id", referencedColumnName = "id")
     private UserEntity userReceive;
 
 

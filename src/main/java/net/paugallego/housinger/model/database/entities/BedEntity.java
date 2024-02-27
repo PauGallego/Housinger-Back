@@ -15,11 +15,11 @@ public class BedEntity {
     @GeneratedValue
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "bedType_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "bedType_id", referencedColumnName = "id")
     private BedTypeEntity bedType;
     private String number;
     @ManyToOne
-    @JoinColumn(name = "property_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "property_id", referencedColumnName = "id")
     private PropertyEntity property;
 
 }
