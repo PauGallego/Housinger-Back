@@ -14,8 +14,6 @@ import net.paugallego.housinger.model.database.entities.PropertyEntity;
 @Data
 public class BedDTO {
 
-    @Id
-    @GeneratedValue
     private Long id;
     private BedTypeEntity bedType;
     private String number;

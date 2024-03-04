@@ -14,9 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Data
 public class ReviewDTO {
-
-    @Id
-    @GeneratedValue
+    
     private Long id;
     private UserEntity reviewUser;
     private PropertyEntity reviewProperty;

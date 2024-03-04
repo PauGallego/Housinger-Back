@@ -14,9 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Data
 public class ReservationDTO {
-
-    @Id
-    @GeneratedValue
+    
     private Long id;
     private UserEntity reservationUser;
     private PropertyEntity reservationProperty;

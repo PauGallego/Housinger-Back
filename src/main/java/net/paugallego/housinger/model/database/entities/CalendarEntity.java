@@ -1,5 +1,6 @@
 package net.paugallego.housinger.model.database.entities;
 
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,7 +25,6 @@ public class CalendarEntity implements Serializable {
     @ElementCollection
     private List<Date> reservedDates;
     @OneToOne(mappedBy = "calendar")
-    @JoinColumn(name = "property_id" , referencedColumnName = "id")
+    @JsonBackReference
     private PropertyEntity property;
 }
-

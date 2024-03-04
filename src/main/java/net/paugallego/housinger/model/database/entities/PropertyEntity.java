@@ -1,5 +1,6 @@
 package net.paugallego.housinger.model.database.entities;
 
+import com.fasterxml.jackson.annotation.*;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,17 +28,21 @@ public class PropertyEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "type_id", referencedColumnName = "id")
     private TypeEntity type;
-    @ManyToMany
-    @JoinColumn(name = "characteristics_id", referencedColumnName = "id")
-    private Set<CharacteristicEntity> characteristics;
     private String description;
     @ElementCollection
     private List<String> fotos;
     @ElementCollection
     private List<String> normas;
     private String extraInfo;
-    @OneToOne
-    @JoinColumn(name = "calendar_id", referencedColumnName = "id" , insertable = false, updatable = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "calendar_id", referencedColumnName = "id")
+    @JsonManagedReference
     private CalendarEntity calendar;
+    @ManyToMany
+    @JoinTable(name = "property_characteristic",
+            joinColumns = @JoinColumn(name = "property_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "characteristic_id", referencedColumnName = "id"))
+    @JsonManagedReference
+    private Set<CharacteristicEntity> characteristics;
 }
 

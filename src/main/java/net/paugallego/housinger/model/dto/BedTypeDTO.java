@@ -12,8 +12,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class BedTypeDTO {
 
-    @Id
-    @GeneratedValue
     private Long id;
     private String name;
     private String icon;

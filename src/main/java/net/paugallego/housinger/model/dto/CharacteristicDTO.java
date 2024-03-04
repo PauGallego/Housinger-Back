@@ -12,8 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class CharacteristicDTO {
-    @Id
-    @GeneratedValue
+
     private Long id;
     private String name;
     private String icon;

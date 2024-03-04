@@ -16,12 +16,8 @@ import java.util.List;
 public class ChatDTO {
 
 
-    @Id
-    @GeneratedValue
     private Long id;
-    @ElementCollection
     private List<Date> date;
-    @ElementCollection
     private List<String> message;
     private UserEntity userSend;
     private UserEntity userReceive;

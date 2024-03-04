@@ -1,5 +1,6 @@
 package net.paugallego.housinger.model.database.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +22,9 @@ public class CharacteristicEntity implements Serializable {
     private String name;
     private String icon;
     private String description;
+    @ManyToMany(mappedBy = "characteristics")
+    @JsonBackReference
+    private Set<PropertyEntity> properties;
 
 }
 

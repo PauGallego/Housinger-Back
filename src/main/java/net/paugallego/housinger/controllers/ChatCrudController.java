@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/v1/message")
+@RequestMapping(path = "/v1/chat")
 public class ChatCrudController extends AbstractController<ChatEntity, ChatDTO, ChatCRUDService, ChatDTOConverter, ChatRepository, Long> {
 }
