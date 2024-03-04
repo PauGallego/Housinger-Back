@@ -17,7 +17,7 @@ import java.util.Set;
 public class PropertyDTO {
 
     private Long id;
-    private UserEntity user;
+    private Long userId;
     private String address;
     private Long typeId;
     private Set<Long> characteristicIds;
