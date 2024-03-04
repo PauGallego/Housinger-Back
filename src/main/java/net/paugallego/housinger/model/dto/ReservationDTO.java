@@ -16,8 +16,8 @@ import java.util.Date;
 public class ReservationDTO {
     
     private Long id;
-    private UserEntity reservationUser;
-    private PropertyEntity reservationProperty;
+    private Long reservationUserId;
+    private Long reservationPropertyId;
     private Date dateStart;
     private Date dateEnd;
 }

@@ -21,6 +21,6 @@ public class CalendarDTO {
     private Long id;
     private List<Date> freeDates;
     private List<Date> reservedDates;
-    private long propertyId;
+    private Long propertyId;
 }
 

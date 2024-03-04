@@ -19,7 +19,7 @@ public class ChatDTO {
     private Long id;
     private List<Date> date;
     private List<String> message;
-    private UserEntity userSend;
-    private UserEntity userReceive;
+    private Long userSendId;
+    private Long userReceiveId;
 
 }

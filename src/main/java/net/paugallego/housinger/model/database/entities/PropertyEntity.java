@@ -43,6 +43,7 @@ public class PropertyEntity implements Serializable {
             joinColumns = @JoinColumn(name = "property_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "characteristic_id", referencedColumnName = "id"))
     @JsonManagedReference
+    @JsonIgnoreProperties("properties")
     private Set<CharacteristicEntity> characteristics;
 }
 

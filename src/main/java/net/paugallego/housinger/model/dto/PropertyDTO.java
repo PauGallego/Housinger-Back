@@ -19,9 +19,9 @@ public class PropertyDTO {
     private Long id;
     private UserEntity user;
     private String address;
-    private TypeEntity type;
-    private Set<CharacteristicEntity> characteristics;
-    private CalendarEntity calendar;
+    private Long typeId;
+    private Set<Long> characteristicIds;
+    private Long calendarId;
     private String description;
     private List<String> fotos;
     private List<String> normas;

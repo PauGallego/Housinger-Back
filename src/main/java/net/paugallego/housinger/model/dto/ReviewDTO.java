@@ -16,8 +16,8 @@ import java.util.Date;
 public class ReviewDTO {
     
     private Long id;
-    private UserEntity reviewUser;
-    private PropertyEntity reviewProperty;
+    private Long reviewUserId;
+    private Long reviewPropertyId;
     private String description;
     private Date date;
     private Float starts;
