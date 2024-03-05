@@ -38,21 +38,14 @@ public class PropertyDTOConverter extends AbstractDTOConverter<PropertyEntity, P
         entity.setExtraInfo(propertyDTO.getExtraInfo());
         entity.setNormas(propertyDTO.getNormas());
         entity.setId(propertyDTO.getId());
-
-        if (propertyDTO.getUser() != null && propertyDTO.getUser().getId() != null) {
-            UserEntity user = userRepository.findById(propertyDTO.getUser().getId()).orElse(null);
+        entity.setType(propertyDTO.getType());
+        entity.setCalendar(propertyDTO.getCalendar());
+        if (propertyDTO.getUserId() != null) {
+            UserEntity user = userRepository.findById(propertyDTO.getUserId()).orElse(null);
             entity.setUser(user);
         }
+        entity.setCharacteristics(propertyDTO.getCharacteristics());
 
-        if (propertyDTO.getCalendarId() != null) {
-            CalendarEntity calendar = calendarRepository.findById(propertyDTO.getCalendarId()).orElse(null);
-            entity.setCalendar(calendar);
-        }
-
-        if (propertyDTO.getTypeId() != null) {
-            TypeEntity type = typeRepository.findById(propertyDTO.getTypeId()).orElse(null);
-            entity.setType(type);
-        }
 
         return entity;
     }
@@ -67,16 +60,14 @@ public class PropertyDTOConverter extends AbstractDTOConverter<PropertyEntity, P
         dto.setExtraInfo(entity.getExtraInfo());
         dto.setNormas(entity.getNormas());
         dto.setId(entity.getId());
-
-        dto.setUser(entity.getUser());
-
-        if (entity.getCalendar() != null) {
-            dto.setCalendarId(entity.getCalendar().getId());
+        dto.setType(entity.getType());
+        dto.setCalendar(entity.getCalendar());
+        dto.setCharacteristics(entity.getCharacteristics());
+        if (entity.getUser() != null) {
+            dto.setUserId(entity.getUser().getId());
         }
 
-        if (entity.getType() != null) {
-            dto.setTypeId(entity.getType().getId());
-        }
+
 
         return dto;
     }

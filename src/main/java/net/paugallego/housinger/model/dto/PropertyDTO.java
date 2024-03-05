@@ -1,6 +1,9 @@
 package net.paugallego.housinger.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,13 +20,14 @@ import java.util.Set;
 public class PropertyDTO {
 
     private Long id;
-    private UserEntity user;
+    private Long userId;
     private String address;
-    private Long typeId;
-    private Set<Long> characteristicIds;
-    private Long calendarId;
+    private TypeEntity type;
+    private CalendarEntity calendar;
     private String description;
     private List<String> fotos;
     private List<String> normas;
     private String extraInfo;
+    @JsonIgnore
+    private Set<CharacteristicEntity> characteristics;
 }
