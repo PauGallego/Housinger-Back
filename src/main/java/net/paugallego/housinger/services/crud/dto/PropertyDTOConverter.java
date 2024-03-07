@@ -41,7 +41,11 @@ public class PropertyDTOConverter extends AbstractDTOConverter<PropertyEntity, P
             UserEntity user = userRepository.findById(propertyDTO.getUserId()).orElse(null);
             entity.setUser(user);
         }
-        entity.setCharacteristics( characteristicDTOConverter.convertFromDTOs(propertyDTO.getCharacteristics()));
+
+        if(propertyDTO.getCharacteristics() != null){
+            entity.setCharacteristics( characteristicDTOConverter.convertFromDTOs(propertyDTO.getCharacteristics()));
+        }
+
 
 
         return entity;
@@ -59,7 +63,12 @@ public class PropertyDTOConverter extends AbstractDTOConverter<PropertyEntity, P
         dto.setId(entity.getId());
         dto.setType(entity.getType());
         dto.setCalendar(entity.getCalendar());
-        dto.setCharacteristics(characteristicDTOConverter.convertFromEntities(entity.getCharacteristics()));
+
+
+        if(entity.getCharacteristics() != null){
+            dto.setCharacteristics(characteristicDTOConverter.convertFromEntities(entity.getCharacteristics()));
+
+        }
 
         if (entity.getUser() != null) {
             dto.setUserId(entity.getUser().getId());

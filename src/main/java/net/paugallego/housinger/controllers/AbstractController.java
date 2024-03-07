@@ -67,6 +67,7 @@ public abstract class AbstractController<E, DTO, CS extends AbstractCRUDService<
             }
         } catch (Exception e) {
             System.out.println("Received DTO for update operation: " + dto.toString());
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiErrorEnum.INDETERMINATE_ERROR);
         }
     }
@@ -81,6 +82,7 @@ public abstract class AbstractController<E, DTO, CS extends AbstractCRUDService<
                 return ResponseEntity.status(HttpStatus.CREATED).body(savedDtos);
             }
         } catch (Exception e) {
+            System.out.println("Received DTOS for update operation: " + dtos.toString());
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiErrorEnum.INDETERMINATE_ERROR);
         }
@@ -99,6 +101,7 @@ public abstract class AbstractController<E, DTO, CS extends AbstractCRUDService<
             }
         } catch (Exception e) {
 
+            System.out.println("Received DTO for update operation: " + dto.toString());
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiErrorEnum.INDETERMINATE_ERROR);
         }
@@ -115,6 +118,7 @@ public abstract class AbstractController<E, DTO, CS extends AbstractCRUDService<
             }
         } catch (Exception e) {
 
+            System.out.println("Received DTOS for update operation: " + dtos.toString());
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiErrorEnum.INDETERMINATE_ERROR);
         }
@@ -130,6 +134,7 @@ public abstract class AbstractController<E, DTO, CS extends AbstractCRUDService<
                 return ResponseEntity.status(HttpStatus.CREATED).body(ApiErrorEnum.NO_ERROR);
             }
         } catch (Exception e) {
+            System.out.println("Received DTO for update operation: " + dto.toString());
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiErrorEnum.INDETERMINATE_ERROR);
         }
