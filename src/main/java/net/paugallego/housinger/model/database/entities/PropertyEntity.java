@@ -42,6 +42,6 @@ public class PropertyEntity implements Serializable {
     @JoinTable(name = "property_characteristic",
             joinColumns = @JoinColumn(name = "property_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "characteristic_id", referencedColumnName = "id"))
-    private Set<CharacteristicEntity> characteristics;
+    private List<CharacteristicEntity> characteristics;
 }
 

@@ -26,7 +26,7 @@ public class CharacteristicEntity implements Serializable {
     private String icon;
     private String description;
     @ManyToMany(mappedBy = "characteristics")
-    private Set<PropertyEntity> properties;
+    private List<PropertyEntity> properties;
 
 }
 

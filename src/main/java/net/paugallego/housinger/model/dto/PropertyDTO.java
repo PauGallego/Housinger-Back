@@ -28,6 +28,6 @@ public class PropertyDTO {
     private List<String> fotos;
     private List<String> normas;
     private String extraInfo;
-    @JsonIgnore
-    private Set<CharacteristicEntity> characteristics;
+    private List<CharacteristicDTO> characteristics;
+
 }
