@@ -21,6 +21,5 @@ public class BedEntity {
     @ManyToOne
     @JoinColumn(name = "property_id", referencedColumnName = "id")
     private PropertyEntity property;
-
 }
 

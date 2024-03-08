@@ -125,7 +125,7 @@ public abstract class AbstractController<E, DTO, CS extends AbstractCRUDService<
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> delete(DTO dto) {
+    public ResponseEntity<?> delete(@RequestBody DTO dto) {
         try {
             if (dto == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiErrorEnum.BODY_IS_MISSING);
