@@ -2,12 +2,16 @@ package net.paugallego.housinger.services.crud.dto;
 
 import net.paugallego.housinger.model.database.entities.CharacteristicEntity;
 import net.paugallego.housinger.model.database.entities.PropertyEntity;
+import net.paugallego.housinger.model.database.repositories.CharacteristicRepository;
 import net.paugallego.housinger.model.database.repositories.PropertyRepository;
-import net.paugallego.housinger.model.database.repositories.ReviewRepository;
+import net.paugallego.housinger.model.dto.FindPropertyByCharacteristicsDTO;
 import net.paugallego.housinger.model.dto.PropertyCharacteristicsDTO;
-import net.paugallego.housinger.model.dto.PropertyReviewsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PropertyCharacteristicsDTOConverter {
@@ -15,13 +19,14 @@ public class PropertyCharacteristicsDTOConverter {
     @Autowired
     private PropertyRepository propertyRepository;
 
+    @Autowired
+    private CharacteristicRepository characteristicRepository;
 
-    public PropertyCharacteristicsDTO convertFromEntity(CharacteristicEntity entity) {
+
+
+    public PropertyCharacteristicsDTO convertFromEntity(PropertyEntity property) {
 
         PropertyCharacteristicsDTO dto = new PropertyCharacteristicsDTO();
-
-        PropertyEntity property = propertyRepository.findByCharacteristics(entity).getFirst();
-
         dto.setPropertyId(property.getId());
         dto.setFoto(property.getFotos().getFirst());
         dto.setOwnerName(property.getUser().getName());
@@ -29,4 +34,7 @@ public class PropertyCharacteristicsDTOConverter {
 
         return dto;
     }
+
+    public List<PropertyCharacteristicsDTO> convertFromEntities(List<PropertyEntity> entities) {return entities.stream().map(this::convertFromEntity).collect(Collectors.toList());}
+
 }
