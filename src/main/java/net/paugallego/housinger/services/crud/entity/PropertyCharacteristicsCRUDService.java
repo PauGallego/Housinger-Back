@@ -41,4 +41,9 @@ public class PropertyCharacteristicsCRUDService {
 
     }
 
+    public List<PropertyCharacteristicsDTO> findAll() {
+
+        return dtoConverter.convertFromEntities(propertyRepository.findAll());
+    }
+
 }

@@ -60,5 +60,17 @@ public class PropertyCharacteristicsController {
         }
     }
 
+    @GetMapping("/get/all")
+    public ResponseEntity<?> getAll() {
+        try {
+            List<PropertyCharacteristicsDTO> dtos = service.findAll();
+            return ResponseEntity.status(HttpStatus.OK).body(dtos);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiErrorEnum.INDETERMINATE_ERROR);
+        }
+    }
+
+
 
 }
