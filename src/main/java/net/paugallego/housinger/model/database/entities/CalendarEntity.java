@@ -21,8 +21,6 @@ public class CalendarEntity implements Serializable {
     @GeneratedValue
     private Long id;
     @ElementCollection
-    private List<Date> freeDates;
-    @ElementCollection
     private List<Date> reservedDates;
     @OneToOne(mappedBy = "calendar")
     @JsonBackReference

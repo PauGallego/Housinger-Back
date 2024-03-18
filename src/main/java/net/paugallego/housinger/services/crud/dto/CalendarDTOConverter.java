@@ -18,7 +18,6 @@ public class CalendarDTOConverter extends AbstractDTOConverter<CalendarEntity, C
     public CalendarEntity convertFromDTO(CalendarDTO calendarDTO) {
         CalendarEntity entity = new CalendarEntity();
 
-        entity.setFreeDates(calendarDTO.getFreeDates());
         entity.setReservedDates(calendarDTO.getReservedDates());
         entity.setId(calendarDTO.getId());
 
@@ -32,7 +31,6 @@ public class CalendarDTOConverter extends AbstractDTOConverter<CalendarEntity, C
     public CalendarDTO convertFromEntity(CalendarEntity entity) {
         CalendarDTO dto = new CalendarDTO();
 
-        dto.setFreeDates(entity.getFreeDates());
         dto.setReservedDates(entity.getReservedDates());
         dto.setId(entity.getId());
 

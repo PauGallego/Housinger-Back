@@ -1,5 +1,6 @@
 package net.paugallego.housinger.model.database.repositories;
 
+import net.paugallego.housinger.model.database.entities.CalendarEntity;
 import net.paugallego.housinger.model.database.entities.CharacteristicEntity;
 import net.paugallego.housinger.model.database.entities.PropertyEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,4 +13,5 @@ import java.util.Optional;
 public interface PropertyRepository extends JpaRepository<PropertyEntity, Long> {
 
     List<PropertyEntity> findByCharacteristics(Optional<CharacteristicEntity> characteristic);
+    PropertyEntity findByCalendar(CalendarEntity calendar);
 }
