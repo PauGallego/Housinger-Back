@@ -1,10 +1,8 @@
 package net.paugallego.housinger.services.crud.dto;
 
-import net.paugallego.housinger.model.database.entities.CharacteristicEntity;
 import net.paugallego.housinger.model.database.entities.PropertyEntity;
 import net.paugallego.housinger.model.database.repositories.CharacteristicRepository;
 import net.paugallego.housinger.model.database.repositories.PropertyRepository;
-import net.paugallego.housinger.model.dto.FindPropertyByCharacteristicsDTO;
 import net.paugallego.housinger.model.dto.PropertyCharacteristicsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
