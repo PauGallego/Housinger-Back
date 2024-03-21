@@ -13,6 +13,7 @@ import net.paugallego.housinger.services.crud.entity.CalendarCRUDService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
 @RequestMapping(path = "/v1/bed")
 public class BedCrudController extends AbstractController<BedEntity, BedDTO, BedCRUDService, BedDTOConverter, BedRepository, Long> {

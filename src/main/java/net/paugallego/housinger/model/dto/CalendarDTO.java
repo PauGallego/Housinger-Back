@@ -19,7 +19,6 @@ import java.util.List;
 public class CalendarDTO {
 
     private Long id;
-    private List<Date> freeDates;
     private List<Date> reservedDates;
     private Long propertyId;
 }
