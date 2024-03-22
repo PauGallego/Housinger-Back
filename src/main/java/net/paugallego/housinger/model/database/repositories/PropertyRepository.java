@@ -14,4 +14,5 @@ public interface PropertyRepository extends JpaRepository<PropertyEntity, Long> 
 
     List<PropertyEntity> findByCharacteristics(Optional<CharacteristicEntity> characteristic);
     PropertyEntity findByCalendar(CalendarEntity calendar);
+    List<PropertyEntity> findByAddressContaining(String location);
 }

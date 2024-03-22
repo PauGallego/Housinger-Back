@@ -15,4 +15,5 @@ public class PropertyCharacteristicsDTO {
     private String foto;
     private String address;
     private String ownerName;
+    private boolean isPremium;
 }
