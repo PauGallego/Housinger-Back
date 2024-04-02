@@ -45,10 +45,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
                 .authorizeRequests()
+                .antMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
+
                     .antMatchers(HttpMethod.POST, "/v1/auth/sign-up").permitAll()
                     .antMatchers(HttpMethod.POST, "/v1/auth/sign-in").permitAll()
-                    .antMatchers(HttpMethod.GET, "/v1/bedType/get/**").hasRole("A")
-                    .antMatchers(HttpMethod.PUT, "v1/calendar/**").hasAnyRole("A", "B", "C")
+                    .antMatchers(HttpMethod.GET, "/v1/user", "/v1/user/**").hasRole("A")
+                    .antMatchers(HttpMethod.POST,  "/v1/user", "/v1/user/**").hasRole("A")
+                    .antMatchers(HttpMethod.DELETE, "/v1/user", "/v1/user/**").hasRole("A")
+                    .antMatchers(HttpMethod.PUT, "/v1/user").hasAnyRole("A", "U")
+                    .antMatchers(HttpMethod.GET, "/v1/**").permitAll()
+                    .antMatchers(HttpMethod.POST, "/v1/**").hasAnyRole("A", "U")
+                    .antMatchers(HttpMethod.PUT, "/v1/**").hasAnyRole("A", "U")
+                    .antMatchers(HttpMethod.DELETE, "/v1/**").hasAnyRole("A", "U")
                     .anyRequest().authenticated()
             .and()
                 .addFilter(new UsernameAndPasswordAuthenticationFilterImplementation(authenticationManagerBean()))
@@ -56,38 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().disable();
                 
 
-//                .antMatchers(HttpMethod.GET, "/friend/*").hasRole("USER")
-//                .antMatchers(HttpMethod.PUT, "/friend/*").hasRole("USER")
-//                .antMatchers(HttpMethod.DELETE, "/friend/*").hasRole("USER")
-//
-//
-//                .antMatchers(HttpMethod.POST, "/auth/sign-up").permitAll()
-//                .antMatchers(HttpMethod.POST, "/auth/sign-up/*").hasRole("ADMIN")
-//                .antMatchers(HttpMethod.POST, "/auth/sign-in").permitAll()
 //                .antMatchers(HttpMethod.PUT, "/auth/activate").permitAll()
-//
-//                .antMatchers(HttpMethod.GET, "/author/*").permitAll()
-//                .antMatchers(HttpMethod.PUT, "/author/follow/*").hasRole("USER")
-//                .antMatchers(HttpMethod.PUT, "/author/change-personal-data").hasRole("AUTHOR")
-//
-//                .antMatchers(HttpMethod.GET, "/user/*").permitAll()
-//                .antMatchers(HttpMethod.GET, "/user/me").hasRole("USER")
-//                .antMatchers(HttpMethod.GET, "/user/recommendations").hasRole("USER")
-//
-//                .antMatchers(HttpMethod.GET, "/book/*").permitAll()
-//                .antMatchers(HttpMethod.POST, "/book/*").hasAnyRole("AUTHOR", "ADMIN")
-//                .antMatchers(HttpMethod.POST, "/book/approval").authenticated()
-//                .antMatchers(HttpMethod.PUT, "/*").hasRole("USER")
-//                .antMatchers(HttpMethod.DELETE, "/*").hasRole("ADMIN")
-//
-//                .antMatchers(HttpMethod.GET, "/saga/*").permitAll()
-//                .antMatchers(HttpMethod.POST, "/saga").hasAnyRole("AUTHOR", "ADMIN")
-//                .antMatchers(HttpMethod.DELETE, "/saga/*").hasAnyRole("AUTHOR", "ADMIN")
-//
-//                .antMatchers(HttpMethod.GET, "/statistics/user/*").hasRole("USER")
-//                .antMatchers(HttpMethod.GET, "/statistics/author/*").hasRole("AUTHOR")
-//                .antMatchers(HttpMethod.GET, "/statistics/admin").hasRole("ADMIN")
-
 
     }
 
