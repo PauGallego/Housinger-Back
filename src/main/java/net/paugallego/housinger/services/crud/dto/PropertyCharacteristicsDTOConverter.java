@@ -23,15 +23,17 @@ public class PropertyCharacteristicsDTOConverter {
 
     public PropertyCharacteristicsDTO convertFromEntity(PropertyEntity property) {
 
-        //Todo
-      /*  PropertyCharacteristicsDTO dto = new PropertyCharacteristicsDTO();
+      PropertyCharacteristicsDTO dto = new PropertyCharacteristicsDTO();
         dto.setPropertyId(property.getId());
         dto.setFoto(property.getFotos().getFirst());
-        dto.setOwnerName(property.getUser().getName());
+        dto.setOwnerName(property.getUser().getCustomerEntity().getName());
         dto.setAddress(property.getAddress());
-        dto.setPremium(property.getUser().getPremium());
-*/
-        return null;
+        if(property.getUser().getRoles().contains("P")){
+            dto.setPremium(true);
+        }else{
+            dto.setPremium(false);
+        }
+        return dto;
     }
 
     public List<PropertyCharacteristicsDTO> convertFromEntities(List<PropertyEntity> entities) {return entities.stream().map(this::convertFromEntity).collect(Collectors.toList());}

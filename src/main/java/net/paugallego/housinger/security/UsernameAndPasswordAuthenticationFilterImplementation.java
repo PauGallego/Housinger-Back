@@ -3,17 +3,12 @@ package net.paugallego.housinger.security;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.paugallego.housinger.configs.SecurityConstants;
-import net.paugallego.housinger.model.database.entities.UserEntity;
-import net.paugallego.housinger.services.crud.dto.Basura;
-import net.paugallego.housinger.services.crud.entity.UserCRUDService;
-import org.springframework.beans.factory.annotation.Autowired;
+import net.paugallego.housinger.model.dto.LoginDTO;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -36,9 +31,9 @@ public class UsernameAndPasswordAuthenticationFilterImplementation extends Usern
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
-        Basura basura = null;
+        LoginDTO basura = null;
         try {
-            basura = new ObjectMapper().readValue(request.getInputStream(), Basura.class);
+            basura = new ObjectMapper().readValue(request.getInputStream(), LoginDTO.class);
             System.out.println("Parsed Basura: " + basura);  // Log here
         } catch (JsonProcessingException e) {
             e.printStackTrace();
