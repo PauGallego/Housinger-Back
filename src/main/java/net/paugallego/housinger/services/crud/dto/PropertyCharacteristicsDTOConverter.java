@@ -25,7 +25,7 @@ public class PropertyCharacteristicsDTOConverter {
 
       PropertyCharacteristicsDTO dto = new PropertyCharacteristicsDTO();
         dto.setPropertyId(property.getId());
-        dto.setFoto(property.getFotos().getFirst());
+        dto.setFoto(property.getFotos().iterator().next());
         dto.setOwnerName(property.getUser().getCustomerEntity().getName());
         dto.setAddress(property.getAddress());
         if(property.getUser().getRoles().contains("P")){
