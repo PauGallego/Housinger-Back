@@ -55,6 +55,7 @@ public class UsernameAndPasswordAuthenticationFilterImplementation extends Usern
 
         Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(basura.getUsername(), basura.getPassword()));
 
+        System.out.println("aaaaaaaaaaaaa");
         System.out.println("Authentication successful: " + auth); // Log here
 
         return auth;

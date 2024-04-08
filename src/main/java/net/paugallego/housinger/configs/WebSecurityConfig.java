@@ -47,8 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
 
-                    .antMatchers(HttpMethod.POST, "/v1/auth/sign-up").permitAll()
-                    .antMatchers(HttpMethod.POST, "/v1/auth/sign-in").permitAll()
+                    .antMatchers(HttpMethod.POST, "/v1/auth/**").permitAll()
                     .antMatchers(HttpMethod.GET, "/v1/user", "/v1/user/**").hasRole("A")
                     .antMatchers(HttpMethod.POST,  "/v1/user", "/v1/user/**").hasRole("A")
                     .antMatchers(HttpMethod.DELETE, "/v1/user", "/v1/user/**").hasRole("A")
