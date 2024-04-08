@@ -4,5 +4,5 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @JsonFormat(shape = JsonFormat.Shape.STRING)
 public enum RoleEnum {
-    A,U,P;
+    U,P,A;
 }

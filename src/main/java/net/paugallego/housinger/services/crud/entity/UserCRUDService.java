@@ -51,7 +51,7 @@ public class UserCRUDService extends AbstractCRUDService<UserEntity, UserDTO, Us
             UserEntity user = new UserEntity();
             user.setUsername(dto.getUsername());
             user.setEnableAccount(false);
-            user.setRoles(Set.of(RoleEnum.A));
+            user.setRoles(Set.of(RoleEnum.U));
             user.setPassword(passwordEncoder.encode(dto.getPassword()));
             user.setMail(dto.getMail());
 
