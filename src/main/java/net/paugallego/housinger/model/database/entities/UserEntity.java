@@ -57,8 +57,11 @@ public class UserEntity implements Serializable, UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<RoleEnum> roles;
 
-    @OneToOne(mappedBy = "userEntity")
+    @OneToOne
+    @JoinColumn(name = "customer_id")
     private CustomerEntity customerEntity;
+
+
 
 
     public UserEntity() {

@@ -26,7 +26,8 @@ public class CustomerEntity {
 
     private String picture;
 
-    @OneToOne
+
+    @OneToOne(mappedBy = "customerEntity")
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity userEntity;
 }

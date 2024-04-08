@@ -1,6 +1,9 @@
 package net.paugallego.housinger.services.crud.entity;
 
+import net.paugallego.housinger.model.database.entities.CustomerEntity;
 import net.paugallego.housinger.model.database.entities.RoleEnum;
+import net.paugallego.housinger.model.database.repositories.CustomerRepository;
+import net.paugallego.housinger.model.dto.RegisterDTO;
 import net.paugallego.housinger.services.crud.dto.UserDTOConverter;
 import net.paugallego.housinger.model.database.entities.UserEntity;
 import net.paugallego.housinger.model.database.repositories.UserRepository;
@@ -30,7 +33,11 @@ public class UserCRUDService extends AbstractCRUDService<UserEntity, UserDTO, Us
         return repository.findById(id).get();
     }
 
-    public UserEntity signUpUser(UserEntity user) {
+
+    @Autowired
+    CustomerRepository customerRepository;
+
+    public UserEntity signUpUser(RegisterDTO dto) {
 //
 //        if (repository.existsUserByEmail(user.getEmail())) {
 //            throw new UserManagementException(BodyErrorCode.EMAIL_ALREADY_EXISTS);
@@ -40,16 +47,28 @@ public class UserCRUDService extends AbstractCRUDService<UserEntity, UserDTO, Us
 //
 //        String activationCode = UUID.randomUUID().toString().substring(0, 8);
 //        user.setActivationCode(activationCode);
-//        user.setEnableAccount(false);
-//        user.setRoles(Set.of(RoleEnum.A));
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        UserCustomer customer = new UserCustomer();
-//
-//        UserEntity userObj = DtoConverter.fromDto(user);
-//
-//        userObj.setCustomer(customer);
-//        customer.setUser(userObj);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+            UserEntity user = new UserEntity();
+            user.setUsername(dto.getUsername());
+            user.setEnableAccount(false);
+            user.setRoles(Set.of(RoleEnum.A));
+            user.setPassword(passwordEncoder.encode(dto.getPassword()));
+            user.setMail(dto.getMail());
+
+            CustomerEntity customer = new CustomerEntity();
+
+            customer.setPicture(dto.getPicture());
+            customer.setSurname(dto.getSurname());
+            customer.setName(dto.getName());
+            customer.setDni(dto.getDni());
+            customerRepository.save(customer);
+
+            user.setCustomerEntity(customer);
+
+
+
         return repository.save(user);
+
+
     }
 }

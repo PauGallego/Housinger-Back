@@ -31,5 +31,5 @@ public class UserDTO {
     private LocalDateTime lastPasswordChange;
     private LocalDateTime nextPasswordChange;
     private Set<RoleEnum> roles;
-    private CustomerEntity customerEntity;
+    private Long customerEntityId;
 }

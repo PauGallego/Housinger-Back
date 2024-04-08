@@ -33,7 +33,7 @@ public class UserDTOConverter extends AbstractDTOConverter<UserEntity, UserDTO> 
         entity.setReasonForExpiredAccount(userDTO.getReasonForExpiredAccount());
         entity.setUsername(userDTO.getUsername());
         entity.setUpdateTime(userDTO.getUpdateTime());
-        entity.setCustomerEntity(userDTO.getCustomerEntity());
+        entity.setCustomerEntity(customerRepository.findById(userDTO.getCustomerEntityId()).orElse(null) );
 
         return entity;
 
@@ -47,7 +47,7 @@ public class UserDTOConverter extends AbstractDTOConverter<UserEntity, UserDTO> 
         dto.setRoles(entity.getRoles());
         dto.setPassword(entity.getPassword());
         dto.setDeleteTime(entity.getDeleteTime());
-        dto.setCustomerEntity(entity.getCustomerEntity());
+        dto.setCustomerEntityId(entity.getCustomerEntity().getId());
         dto.setId(entity.getId());
         dto.setNextPasswordChange(entity.getNextPasswordChange());
         dto.setLastPasswordChange(entity.getLastPasswordChange());

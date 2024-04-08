@@ -19,7 +19,6 @@ public class CustomerDTOConverter extends AbstractDTOConverter<CustomerEntity, C
         CustomerEntity entity = new CustomerEntity();
         entity.setId(dto.getId());
         entity.setName(dto.getName());
-        entity.setUserEntity(userRepository.findById(dto.getUserEntityId()).orElse(null));
         entity.setDni(dto.getDni());
         entity.setSurname(dto.getSurname());
         entity.setPicture(dto.getPicture());
@@ -31,10 +30,10 @@ public class CustomerDTOConverter extends AbstractDTOConverter<CustomerEntity, C
     @Override
     public CustomerDTO convertFromEntity(CustomerEntity entity) {
         CustomerDTO dto = new CustomerDTO();
-        dto.setDni(dto.getDni());
-        dto.setUserEntityId(entity.getUserEntity().getId());
+        dto.setDni(entity.getDni());
+        dto.setUserEntityId(userRepository.findByCustomerEntity(entity).getId());
         dto.setSurname(entity.getSurname());
-        dto.setId(dto.getId());
+        dto.setId(entity.getId());
         dto.setPicture(entity.getPicture());
         dto.setName(entity.getName());
 
