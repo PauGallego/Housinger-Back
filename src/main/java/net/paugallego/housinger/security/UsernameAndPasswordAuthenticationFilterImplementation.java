@@ -31,35 +31,41 @@ public class UsernameAndPasswordAuthenticationFilterImplementation extends Usern
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
-        LoginDTO basura = null;
+        LoginDTO loginDTO = null;
         try {
-            basura = new ObjectMapper().readValue(request.getInputStream(), LoginDTO.class);
-            System.out.println("Parsed Basura: " + basura);  // Log here
+            loginDTO = new ObjectMapper().readValue(request.getInputStream(), LoginDTO.class);
+            System.out.println("Parsed User: " + loginDTO.getUsername() + "Parsed Pass:" + loginDTO.getPassword());  // Log here
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-            System.out.println("JsonProcessingException when parsing Basura: " + e.getMessage());  // Log here
+            System.out.println("JsonProcessingException when parsing LoginDTO: " + e.getMessage());  // Log here
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        //Null check for basura
-        if(basura == null) {
-            throw new RuntimeException("Invalid request format. Please check the payload");
+        try {
+            //Null check for loginDTO
+            if(loginDTO == null) {
+                throw new RuntimeException("Invalid request format. Please check the payload");
+            }
+
+            //Null check for authenticationManager
+            if(authenticationManager == null) {
+                throw new RuntimeException("AuthenticationManager is not initialized. Please check the configuration");
+            }
+
+            UsernamePasswordAuthenticationToken token =  new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword());
+
+            Authentication auth = authenticationManager.authenticate(token);
+
+            System.out.println("Authentication successful: " + auth); // Log here
+
+            return auth;
+        } catch (AuthenticationException e) {
+            throw new RuntimeException(e);
         }
-
-        //Null check for authenticationManager
-        if(authenticationManager == null) {
-            throw new RuntimeException("AuthenticationManager is not initialized. Please check the configuration");
-        }
-
-        Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(basura.getUsername(), basura.getPassword()));
-
-        System.out.println("aaaaaaaaaaaaa");
-        System.out.println("Authentication successful: " + auth); // Log here
-
-        return auth;
     }
+
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {

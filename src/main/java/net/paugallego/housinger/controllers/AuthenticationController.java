@@ -2,6 +2,7 @@ package net.paugallego.housinger.controllers;
 
 import net.paugallego.housinger.model.database.entities.UserEntity;
 import net.paugallego.housinger.model.dto.RegisterDTO;
+import net.paugallego.housinger.model.dto.LoginDTO;
 import net.paugallego.housinger.model.dto.UserDTO;
 import net.paugallego.housinger.services.crud.dto.UserDTOConverter;
 import net.paugallego.housinger.services.crud.entity.UserCRUDService;
@@ -36,7 +37,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/sign-in")
-    public ResponseEntity<?> signin (@RequestBody UserEntity user){
+    public ResponseEntity<?> signin (@RequestBody LoginDTO user){
+
 
 
         return ResponseEntity.status(HttpStatus.OK).body("Logued");

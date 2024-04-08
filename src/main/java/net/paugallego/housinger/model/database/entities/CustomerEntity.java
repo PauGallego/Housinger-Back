@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.catalina.User;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -29,5 +30,6 @@ public class CustomerEntity {
 
     @OneToOne(mappedBy = "customerEntity")
     @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ToString.Exclude
     private UserEntity userEntity;
 }
