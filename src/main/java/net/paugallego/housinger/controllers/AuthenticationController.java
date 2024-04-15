@@ -4,6 +4,7 @@ import net.paugallego.housinger.model.database.entities.UserEntity;
 import net.paugallego.housinger.model.dto.RegisterDTO;
 import net.paugallego.housinger.model.dto.LoginDTO;
 import net.paugallego.housinger.model.dto.UserDTO;
+import net.paugallego.housinger.services.crud.MailService;
 import net.paugallego.housinger.services.crud.dto.UserDTOConverter;
 import net.paugallego.housinger.services.crud.entity.UserCRUDService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class AuthenticationController {
     @Autowired
     UserCRUDService service;
 
+    @Autowired
+    MailService mailService;
+
 
     @PostMapping("/sign-up")
     public ResponseEntity<?> signup (@RequestBody RegisterDTO userDTO){
@@ -31,6 +35,8 @@ public class AuthenticationController {
         UserEntity user = service.signUpUser(userDTO);
 
         response =   ResponseEntity.status(HttpStatus.OK).body(user);
+
+        mailService.sendMail(userDTO.getMail(),"Account created!", "<p>No Waaaay</p>");
 
         return  response;
 
