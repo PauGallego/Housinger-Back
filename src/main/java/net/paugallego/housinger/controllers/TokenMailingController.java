@@ -1,5 +1,8 @@
 package net.paugallego.housinger.controllers;
 
+import net.paugallego.housinger.configs.PasswordEncoderConfig;
+import net.paugallego.housinger.services.crud.MailService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import net.paugallego.housinger.exceptions.ApiErrorEnum;
 import net.paugallego.housinger.model.database.entities.TokenMailingEntity;
@@ -14,10 +17,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.token.TokenService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 
 @RestController
@@ -31,37 +41,98 @@ public class TokenMailingController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Value("${spring.default.url}")
+    private String url;
+
+    @Autowired
+    TokenMailingRepository tokenRepo;
+
+    @Autowired
+    MailService mailService;
+
+
+
+
+    public PasswordEncoder getPasswordEncoder() {
+        return passwordEncoder;
+    }
 
     @GetMapping("/recover/{token}")
     public ResponseEntity<?> recover(@PathVariable String token) {
         try {
+            TokenMailingEntity entity = repository.findByToken(token);
 
+            if (Objects.equals(entity.getType(),"password")) {
 
-             TokenMailingEntity entity = repository.findByToken(token);
+                String htmlContent = "";
+                try {
+                    htmlContent = new String(Files.readAllBytes(Paths.get("src/main/resources/static/changepass.html")));
+                    htmlContent = htmlContent.replace("{{userId}}", String.valueOf(entity.getUserEntity().getId()));
+                    htmlContent = htmlContent.replace("{{url}}", url);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
+                return ResponseEntity.ok().body(htmlContent);
 
-            return ResponseEntity.status(HttpStatus.OK).body("donete");
+            } else {
+                Resource resource = new ClassPathResource("static/error.html");
+                return ResponseEntity.ok().body(resource);
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiErrorEnum.INDETERMINATE_ERROR);
+            Resource resource = new ClassPathResource("static/error.html");
+            return ResponseEntity.ok().body(resource);
         }
     }
+
+    @PostMapping("/recover/success")
+    public ResponseEntity<?> recoverSuccess(@RequestParam Long id, @RequestParam String password) {
+        try {
+            UserEntity user = userRepository.findById(id).orElse(null);
+
+            if (user != null) {
+                String encodedPassword = passwordEncoder.encode(password);
+                user.setPassword(encodedPassword);
+                userRepository.save(user);
+                Resource resource = new ClassPathResource("static/success.html");
+
+                TokenMailingEntity token = tokenRepo.findByUserEntity(user);
+
+                tokenRepo.delete(token);
+
+                return ResponseEntity.ok().body(resource);
+            } else {
+                Resource errorResource = new ClassPathResource("static/error.html");
+                return ResponseEntity.ok().body(errorResource);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Resource errorResource = new ClassPathResource("static/error.html");
+            return ResponseEntity.ok().body(errorResource);
+        }
+    }
+
 
     @GetMapping("/enable/{token}")
     public ResponseEntity<?> enable(@PathVariable String token) {
         try {
             TokenMailingEntity entity = repository.findByToken(token);
 
-            if (Objects.equals(entity.getType(), "enable")){
+            if (Objects.equals(entity.getType(), "enable") && entity.getUserEntity().isEnabled()){
                 entity.getUserEntity().setEnableAccount(true);
                 userRepository.save(entity.getUserEntity());
+                repository.delete(entity);
             }else{
                 Resource resource = new ClassPathResource("static/error.html");
                 return ResponseEntity.ok().body(resource);
             }
 
 
-            repository.delete(entity);
+
             Resource resource = new ClassPathResource("static/enable.html");
             return ResponseEntity.ok().body(resource);
         } catch (Exception e) {
@@ -71,5 +142,47 @@ public class TokenMailingController {
         }
     }
 
+    @GetMapping("/recover/user/{mail}")
+    public ResponseEntity<?> recovermail(@PathVariable String mail) {
+        try {
 
+            UserEntity user = userRepository.findByMail(mail);
+
+            TokenMailingEntity token = new TokenMailingEntity();
+
+            String token2 = generateRandomToken();
+
+
+            token.setUserEntity(user);
+            token.setType("password");
+            token.setToken(token2);
+
+            tokenRepo.save(token);
+
+            mailService.sendMail(user.getMail(),
+                    "Housinger: Modifica tu contraseña!",
+                    "<p>Accede al siguiente enlace para modificarla: " +
+                            "<a href=\"" + url + "/v1/recover/" + token2 + "\">Modificar</a></p>");
+
+
+
+            return   ResponseEntity.status(HttpStatus.OK).body("ok");
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Resource resource = new ClassPathResource("static/error.html");
+            return ResponseEntity.ok().body(resource);
+        }
+    }
+
+
+    private String generateRandomToken() {
+
+        UUID uuid = UUID.randomUUID();
+        String token = uuid.toString().replace("-", "").substring(0, 9)
+                + "-" + uuid.toString().replace("-", "").substring(9, 18)
+                + "-" + uuid.toString().replace("-", "").substring(18, 27);
+        return token;
+    }
 }
