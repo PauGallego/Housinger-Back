@@ -26,7 +26,7 @@ public class PropertyCalendarController {
     PropertyDatesCRUDService service;
 
 
-    @GetMapping("/get")
+    @PostMapping("/get")
     public ResponseEntity<?> getByDTO(@RequestBody FindPropertyByDateDTO dto) {
         try {
             Date start = dto.getStartDate();
