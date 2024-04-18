@@ -36,7 +36,7 @@ public class PropertyCharacteristicsController {
         }
     }
 
-    @GetMapping("/get")
+    @PostMapping("/get")
     public ResponseEntity<?> getByDTO(@RequestBody FindPropertyByCharacteristicsDTO dto) {
         try {
             List<Long> characteristics = dto.getCharacteristics();
