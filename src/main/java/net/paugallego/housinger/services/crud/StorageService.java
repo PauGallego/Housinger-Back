@@ -30,7 +30,7 @@ public class StorageService {
     private PropertyRepository propertyRepository;
 
 
-    @Value("${spring.default.url}")
+    @Value("${spring.default.image.path}")
     private String FOLDER_PATH;
 
     public String uploadImageToFileSystemCustomer(MultipartFile file, Long customerId) throws IOException {

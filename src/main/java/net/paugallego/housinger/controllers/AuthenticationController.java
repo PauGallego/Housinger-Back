@@ -45,7 +45,7 @@ public class AuthenticationController {
 
         UserEntity user = service.signUpUser(userDTO);
 
-        response =   ResponseEntity.status(HttpStatus.OK).body("ok");
+        response =   ResponseEntity.status(HttpStatus.OK).body(user);
 
         String token = generateRandomToken();
 
