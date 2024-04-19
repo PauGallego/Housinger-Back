@@ -4,6 +4,7 @@ import net.paugallego.housinger.model.database.entities.CustomerEntity;
 import net.paugallego.housinger.model.database.entities.PropertyEntity;
 import net.paugallego.housinger.model.database.repositories.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import net.paugallego.housinger.model.database.repositories.CustomerRepository;
@@ -28,7 +29,9 @@ public class StorageService {
     @Autowired
     private PropertyRepository propertyRepository;
 
-    private final String FOLDER_PATH = "/home/paugallego/Pictures/";
+
+    @Value("${spring.default.url}")
+    private String FOLDER_PATH;
 
     public String uploadImageToFileSystemCustomer(MultipartFile file, Long customerId) throws IOException {
         Optional<CustomerEntity> customerOptional = customerRepository.findById(customerId);
