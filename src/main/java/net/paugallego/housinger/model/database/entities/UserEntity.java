@@ -57,7 +57,7 @@ public class UserEntity implements Serializable, UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<RoleEnum> roles;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "customer_id")
     private CustomerEntity customerEntity;
 
