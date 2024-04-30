@@ -24,7 +24,7 @@ public class MessageController {
     @Autowired
     MessageCRUDService service;
 
-    @GetMapping("/getRecived/{id}")
+    @GetMapping("/getReceived/{id}")
     public ResponseEntity<?> getByRecivedId(@PathVariable Long id) {
         try {
             List<MessageDTO> dtos = service.findByRecieverId(id);
@@ -35,7 +35,7 @@ public class MessageController {
         }
     }
 
-    @GetMapping("/getSended/{id}")
+    @GetMapping("/getSent/{id}")
     public ResponseEntity<?> getBySendedId(@PathVariable Long id) {
         try {
             List<MessageDTO> dtos = service.findBySenderId(id);

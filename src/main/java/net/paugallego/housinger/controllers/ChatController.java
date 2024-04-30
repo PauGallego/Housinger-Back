@@ -48,9 +48,6 @@ public class ChatController {
 
                 MessageEntity messageEntity = dtoConverter.convertFromDTO(message);
 
-                Date currentDate = new Date();
-
-                messageEntity.setDate(currentDate.toString());
 
                 chatRepository.save(messageEntity);
 
