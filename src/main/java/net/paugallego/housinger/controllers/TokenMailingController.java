@@ -122,7 +122,7 @@ public class TokenMailingController {
         try {
             TokenMailingEntity entity = repository.findByToken(token);
 
-            if (Objects.equals(entity.getType(), "enable") && entity.getUserEntity().isEnabled()){
+            if (Objects.equals(entity.getType(), "enable") && !entity.getUserEntity().isEnabled()){
                 entity.getUserEntity().setEnableAccount(true);
                 userRepository.save(entity.getUserEntity());
                 repository.delete(entity);
