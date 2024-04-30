@@ -2,13 +2,17 @@ package net.paugallego.housinger.controllers;
 
 import net.paugallego.housinger.model.database.entities.CustomerEntity;
 import net.paugallego.housinger.model.database.entities.MessageEntity;
+import net.paugallego.housinger.model.database.repositories.ChatRepository;
 import net.paugallego.housinger.model.database.repositories.CustomerRepository;
 import net.paugallego.housinger.model.dto.MessageDTO;
+import net.paugallego.housinger.services.crud.dto.MessageDTOConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+
+import java.util.Date;
 
 @Controller
 public class ChatController {
@@ -18,6 +22,12 @@ public class ChatController {
 
     @Autowired
     private CustomerRepository repository;
+
+    @Autowired
+    private ChatRepository chatRepository;
+
+    @Autowired
+    private MessageDTOConverter dtoConverter;
 
     @MessageMapping("/message")
     public void receiveMessage(@Payload MessageEntity message) {
@@ -35,7 +45,17 @@ public class ChatController {
 
             if (receiver != null) {
                 simpMessagingTemplate.convertAndSendToUser(receiver.getId().toString(), "/private", message);
-                System.out.println("Private message sent: " + message);
+
+                MessageEntity messageEntity = dtoConverter.convertFromDTO(message);
+
+                Date currentDate = new Date();
+
+                messageEntity.setDate(currentDate.toString());
+
+                chatRepository.save(messageEntity);
+
+
+
             } else {
                 System.out.println("Receiver not found for message: " + message);
             }

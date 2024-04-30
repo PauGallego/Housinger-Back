@@ -49,6 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.POST, "/v1/auth/**").permitAll()
                     .antMatchers("/v1/recover/**").permitAll()
                     .antMatchers("/ws/**").permitAll()
+                    .antMatchers("/v1/chat/**").permitAll()
                     .antMatchers(HttpMethod.POST, "/v1/fileCustomer/**").permitAll()
                     .antMatchers(HttpMethod.POST, "/v1/propertyCharacteristics/**").permitAll()
                     .antMatchers(HttpMethod.POST, "/v1/propertyCalendar/**").permitAll()

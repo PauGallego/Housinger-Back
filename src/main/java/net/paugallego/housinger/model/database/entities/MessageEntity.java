@@ -13,6 +13,7 @@ import javax.persistence.*;
 public class MessageEntity {
 
     @Id
+    @GeneratedValue
     private Long id;
 
     @ManyToOne
