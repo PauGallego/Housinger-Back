@@ -48,7 +48,6 @@ public class ChatController {
 
                 MessageEntity messageEntity = dtoConverter.convertFromDTO(message);
 
-
                 chatRepository.save(messageEntity);
 
 

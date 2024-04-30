@@ -29,7 +29,6 @@ public class MessageDTOConverter extends AbstractDTOConverter<MessageEntity, Mes
         entity.setReceiver(customerRepository.findById(MessageDTO.getReceiverId()).orElse(null));
         entity.setSender(customerRepository.findById(MessageDTO.getSenderId()).orElse(null));
         entity.setId(MessageDTO.getId());
-
         return entity;
     }
 
