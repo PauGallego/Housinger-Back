@@ -15,6 +15,8 @@ import net.paugallego.housinger.services.crud.dto.PropertyCharacteristicsDTOConv
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,6 +62,30 @@ public class MessageCRUDService {
 
 
     }
+
+
+    public List<MessageDTO> findByIds(Long id, Long id2) {
+
+        CustomerEntity customer1 = customerRepository.findById(id).orElse(null);
+        CustomerEntity customer2 = customerRepository.findById(id2).orElse(null);
+
+        if (customer1 == null || customer2 == null) {
+            return Collections.emptyList();
+        }
+
+        List<MessageEntity> messagesBetweenCustomers = repository.findBySenderAndReceiver(customer1, customer2);
+
+        List<MessageEntity> messagesBetweenCustomersReverse = repository.findBySenderAndReceiver(customer2, customer1);
+
+        List<MessageEntity> messagesInBothLists = new ArrayList<>();
+
+        messagesInBothLists.addAll(messagesBetweenCustomers);
+        messagesInBothLists.addAll(messagesBetweenCustomersReverse);
+
+        return dtoConverter.convertFromEntities(messagesInBothLists);
+    }
+
+
 
 }
 

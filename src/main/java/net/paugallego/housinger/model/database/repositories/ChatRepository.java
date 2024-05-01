@@ -13,4 +13,6 @@ public interface ChatRepository extends JpaRepository<MessageEntity, Long> {
     List<MessageEntity> findByReceiver(CustomerEntity customer);
     List<MessageEntity> findBySender(CustomerEntity customer);
 
+    List<MessageEntity> findBySenderAndReceiver(CustomerEntity sender, CustomerEntity receiver);
+
 }

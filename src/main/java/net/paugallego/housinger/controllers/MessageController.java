@@ -45,5 +45,21 @@ public class MessageController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiErrorEnum.INDETERMINATE_ERROR);
         }
     }
+
+
+    @GetMapping("/getChat/{id}/{id2}")
+    public ResponseEntity<?> getChatByIds(@PathVariable Long id, @PathVariable Long id2) {
+        try {
+            List<MessageDTO> dtos = service.findByIds(id, id2);
+            if (dtos.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontraron mensajes.");
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(dtos);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiErrorEnum.INDETERMINATE_ERROR);
+        }
+    }
+
 }
 
