@@ -20,4 +20,10 @@ public class MessageDTO {
     private String message;
     private String date;
     private Status status;
+    private String senderName;
+    private String senderSurname;
+    private String senderPicture;
+    private String receiverName;
+    private String receiverSurname;
+    private String receiverPicture;
 }

@@ -49,9 +49,6 @@ public class ChatController {
                 MessageEntity messageEntity = dtoConverter.convertFromDTO(message);
 
                 chatRepository.save(messageEntity);
-
-
-
             } else {
                 System.out.println("Receiver not found for message: " + message);
             }

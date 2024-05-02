@@ -21,10 +21,8 @@ import java.util.List;
 @RequestMapping(path = "/v1/propertyCalendar")
 public class PropertyCalendarController {
 
-
     @Autowired
     PropertyDatesCRUDService service;
-
 
     @PostMapping("/get")
     public ResponseEntity<?> getByDTO(@RequestBody FindPropertyByDateDTO dto) {
@@ -52,7 +50,5 @@ public class PropertyCalendarController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiErrorEnum.INDETERMINATE_ERROR);
         }
     }
-
-
 
 }

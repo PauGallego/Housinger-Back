@@ -42,6 +42,12 @@ public class MessageDTOConverter extends AbstractDTOConverter<MessageEntity, Mes
         dto.setSenderId(entity.getSender().getId());
         dto.setReceiverId(entity.getReceiver().getId());
         dto.setId(entity.getId());
+        dto.setReceiverName(entity.getReceiver().getName());
+        dto.setReceiverSurname(entity.getReceiver().getSurname());
+        dto.setReceiverPicture(entity.getReceiver().getPicture());
+        dto.setSenderName(entity.getSender().getName());
+        dto.setSenderSurname(entity.getSender().getSurname());
+        dto.setSenderPicture(entity.getSender().getPicture());
 
         return dto;
     }
