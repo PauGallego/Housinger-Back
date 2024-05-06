@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface TokenMailingRepository extends JpaRepository<TokenMailingEntity, Long> {
     TokenMailingEntity findByToken(String token);
     TokenMailingEntity findByUserEntity(UserEntity user);
+    TokenMailingEntity findByUserEntityAndType(UserEntity user, String type);
 }

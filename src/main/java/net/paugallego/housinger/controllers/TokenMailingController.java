@@ -100,7 +100,7 @@ public class TokenMailingController {
                 userRepository.save(user);
                 Resource resource = new ClassPathResource("static/success.html");
 
-                TokenMailingEntity token = tokenRepo.findByUserEntity(user);
+                TokenMailingEntity token = tokenRepo.findByUserEntityAndType(user, "password");
 
                 tokenRepo.delete(token);
 
@@ -147,6 +147,11 @@ public class TokenMailingController {
         try {
 
             UserEntity user = userRepository.findByMail(mail);
+
+            if (user == null){
+                return   ResponseEntity.status(HttpStatus.OK).body("ok");
+
+            }
 
             TokenMailingEntity token = new TokenMailingEntity();
 
