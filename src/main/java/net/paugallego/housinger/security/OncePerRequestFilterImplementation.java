@@ -38,7 +38,9 @@ public class OncePerRequestFilterImplementation extends OncePerRequestFilter {
         }
         if (header == null || !header.startsWith("Authentication " + SecurityConstants.TOKEN_PREFIX)) {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
+
             return;
+
         }
 
         UsernamePasswordAuthenticationToken authentication;
