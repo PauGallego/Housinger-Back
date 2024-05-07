@@ -42,7 +42,7 @@ public class UsernameAndPasswordAuthenticationFilterImplementation extends Usern
         LoginDTO loginDTO = null;
         try {
             loginDTO = new ObjectMapper().readValue(request.getInputStream(), LoginDTO.class);
-            System.out.println("Parsed User: " + loginDTO.getUsername() + "Parsed Pass:" + loginDTO.getPassword());  // Log here
+
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             System.out.println("JsonProcessingException when parsing LoginDTO: " + e.getMessage());  // Log here
@@ -66,7 +66,6 @@ public class UsernameAndPasswordAuthenticationFilterImplementation extends Usern
 
             Authentication auth = authenticationManager.authenticate(token);
 
-            System.out.println("Authentication successful: " + auth); // Log here
 
             response.setStatus(HttpServletResponse.SC_OK);
 
@@ -96,7 +95,6 @@ public class UsernameAndPasswordAuthenticationFilterImplementation extends Usern
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         String token = JWTTokenProvider.generateToken(authResult);
 
-        System.out.println(token);
 
         response.addHeader(SecurityConstants.HEADER, SecurityConstants.TOKEN_PREFIX + token);
     }
