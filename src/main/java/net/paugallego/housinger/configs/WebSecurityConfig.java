@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.POST, "/v1/auth/**").permitAll()
                     .antMatchers("/v1/premium/**").hasAnyRole("P","A","U")
                     .antMatchers("/v1/recover/**").permitAll()
-                    .antMatchers("/ws/**").hasAnyRole("P","A","U")
+                    .antMatchers("/ws/**").permitAll()
                     .antMatchers("/v1/chat/**").hasAnyRole("P","A","U")
                     .antMatchers(HttpMethod.POST, "/v1/fileCustomer/**").permitAll()
                     .antMatchers(HttpMethod.POST, "/v1/propertyCharacteristics/**").hasAnyRole("P","A","U")
