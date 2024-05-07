@@ -45,6 +45,28 @@ public class PremiumController {
         }
     }
 
+    @GetMapping("/get/{id}")
+    public ResponseEntity<?> getidPremium(@PathVariable Long id) {
+        try {
+            Optional<UserEntity> optionalUser = service.findById(id);
+
+            if (optionalUser.isPresent()) {
+                UserEntity user = optionalUser.get();
+
+                if (user.getRoles().contains(RoleEnum.P)) {
+
+                    return ResponseEntity.status(HttpStatus.OK).body("ok");
+                } else {
+                    return ResponseEntity.status(HttpStatus.OK).body("no");
+                }
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado.");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar la solicitud: " + e.getMessage());
+        }
+    }
+
 
 
 
