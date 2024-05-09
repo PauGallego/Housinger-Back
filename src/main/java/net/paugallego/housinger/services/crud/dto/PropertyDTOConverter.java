@@ -1,10 +1,7 @@
 package net.paugallego.housinger.services.crud.dto;
 
 import net.paugallego.housinger.model.database.entities.*;
-import net.paugallego.housinger.model.database.repositories.CalendarRepository;
-import net.paugallego.housinger.model.database.repositories.CharacteristicRepository;
-import net.paugallego.housinger.model.database.repositories.TypeRepository;
-import net.paugallego.housinger.model.database.repositories.UserRepository;
+import net.paugallego.housinger.model.database.repositories.*;
 import net.paugallego.housinger.model.dto.PropertyDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +18,9 @@ public class PropertyDTOConverter extends AbstractDTOConverter<PropertyEntity, P
 
     @Autowired
     private CharacteristicDTOConverter characteristicDTOConverter;
+    
+    @Autowired
+    private ReviewRepository reviewRepository;
 
 
 
@@ -72,6 +72,23 @@ public class PropertyDTOConverter extends AbstractDTOConverter<PropertyEntity, P
 
         if (entity.getUser() != null) {
             dto.setUserId(entity.getUser().getId());
+            dto.setName(entity.getUser().getCustomerEntity().getName());
+            dto.setSurname(entity.getUser().getCustomerEntity().getSurname());
+            dto.setPicture(entity.getUser().getCustomerEntity().getPicture());
+            dto.setPremium(entity.getUser().getRoles().contains(RoleEnum.P));
+            dto.setCustomerId(entity.getUser().getCustomerEntity().getId());
+
+            List<ReviewEntity> reviewEntities = reviewRepository.findByReviewProperty(entity);
+
+            if (!reviewEntities.isEmpty()) {
+                float stars = 0F;
+                for (ReviewEntity review : reviewEntities) {
+                    stars += review.getStarts();
+                }
+                dto.setStars(stars / reviewEntities.size());
+            }else{
+                dto.setStars(0F);
+            }
         }
 
 

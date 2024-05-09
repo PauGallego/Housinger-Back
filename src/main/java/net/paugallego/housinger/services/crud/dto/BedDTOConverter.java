@@ -47,6 +47,8 @@ public class BedDTOConverter extends AbstractDTOConverter<BedEntity, BedDTO> {
 
         if (entity.getBedType() != null) {
             dto.setBedTypeId(entity.getBedType().getId());
+            dto.setIcon(entity.getBedType().getIcon());
+            dto.setType(entity.getBedType().getName());
         }
 
         return dto;

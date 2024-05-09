@@ -16,6 +16,9 @@ public class PropertyDTO {
 
     private Long id;
     private Long userId;
+    private String name;
+    private String surname;
+    private String picture;
     private String address;
     private TypeEntity type;
     private CalendarEntity calendar;
@@ -24,5 +27,8 @@ public class PropertyDTO {
     private List<String> normas;
     private String extraInfo;
     private List<CharacteristicDTO> characteristics;
+    private Boolean premium;
+    private Float stars;
+    private Long customerId;
 
 }

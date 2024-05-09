@@ -33,7 +33,7 @@ public class ReviewDTOConverter extends AbstractDTOConverter<ReviewEntity, Revie
         PropertyEntity reviewProperty = propertyRepository.findById(reviewDTO.getReviewPropertyId()).orElse(null);
         entity.setReviewProperty(reviewProperty);
 
-        entity.setStarts(reviewDTO.getStarts());
+        entity.setStarts(reviewDTO.getStars());
         entity.setId(reviewDTO.getId());
 
         return entity;
@@ -42,19 +42,21 @@ public class ReviewDTOConverter extends AbstractDTOConverter<ReviewEntity, Revie
     @Override
     public ReviewDTO convertFromEntity(ReviewEntity entity) {
         ReviewDTO dto = new ReviewDTO();
-
         dto.setDate(entity.getDate());
         dto.setDescription(entity.getDescription());
 
         if (entity.getReviewUser() != null) {
             dto.setReviewUserId(entity.getReviewUser().getId());
+            dto.setName(entity.getReviewUser().getCustomerEntity().getName());
+            dto.setSurname(entity.getReviewUser().getCustomerEntity().getSurname());
+            dto.setPicture(entity.getReviewUser().getCustomerEntity().getPicture());
         }
 
         if (entity.getReviewProperty() != null) {
             dto.setReviewPropertyId(entity.getReviewProperty().getId());
         }
 
-        dto.setStarts(entity.getStarts());
+        dto.setStars(entity.getStarts());
         dto.setId(entity.getId());
 
         return dto;

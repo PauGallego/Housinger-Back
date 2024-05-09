@@ -17,4 +17,6 @@ public class BedDTO {
     private Long bedTypeId;
     private String number;
     private Long propertyId;
+    private String type;
+    private String icon;
 }

@@ -17,5 +17,9 @@ public class ReviewDTO {
     private Long reviewPropertyId;
     private String description;
     private Date date;
-    private Float starts;
+    private Float stars;
+    private String name;
+    private String surname;
+    private String picture;
+
 }
