@@ -30,5 +30,6 @@ public class PropertyDTO {
     private Boolean premium;
     private Float stars;
     private Long customerId;
+    private List<String> seguridadHogar;
 
 }
