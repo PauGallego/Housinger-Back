@@ -1,6 +1,7 @@
 package net.paugallego.housinger.services.crud.dto;
 
 import net.paugallego.housinger.model.database.entities.PropertyEntity;
+import net.paugallego.housinger.model.database.entities.RoleEnum;
 import net.paugallego.housinger.model.database.repositories.CharacteristicRepository;
 import net.paugallego.housinger.model.database.repositories.PropertyRepository;
 import net.paugallego.housinger.model.dto.PropertyCharacteristicsDTO;
@@ -28,9 +29,10 @@ public class PropertyCharacteristicsDTOConverter {
         dto.setFoto(property.getFotos().iterator().next());
         dto.setOwnerName(property.getUser().getCustomerEntity().getName() + " " +  property.getUser().getCustomerEntity().getSurname());
         dto.setAddress(property.getAddress());
-        if(property.getUser().getRoles().toString().contains("P")){
+
+        if (property.getUser().getRoles().contains(RoleEnum.P)) {
             dto.setPremium(true);
-        }else{
+        } else {
             dto.setPremium(false);
         }
         return dto;

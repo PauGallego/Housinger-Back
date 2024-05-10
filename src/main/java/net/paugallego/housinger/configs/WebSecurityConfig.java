@@ -51,6 +51,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/v1/recover/**").permitAll()
                     .antMatchers("/ws/**").permitAll()
                     .antMatchers("/v1/propertyCharacteristics/**").permitAll()
+                    .antMatchers("/v1/propertyLocation/**").permitAll()
+                    .antMatchers("/v1/propertyCalendar/**").permitAll()
                     .antMatchers("/v1/chat/**").hasAnyRole("P","A","U")
                     .antMatchers(HttpMethod.POST, "/v1/fileCustomer/**").permitAll()
                     .antMatchers(HttpMethod.POST, "/v1/propertyCharacteristics/**").hasAnyRole("P","A","U")
