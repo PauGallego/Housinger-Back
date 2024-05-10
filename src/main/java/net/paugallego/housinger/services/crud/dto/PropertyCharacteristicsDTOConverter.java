@@ -26,7 +26,7 @@ public class PropertyCharacteristicsDTOConverter {
       PropertyCharacteristicsDTO dto = new PropertyCharacteristicsDTO();
         dto.setPropertyId(property.getId());
         dto.setFoto(property.getFotos().iterator().next());
-        dto.setOwnerName(property.getUser().getCustomerEntity().getName());
+        dto.setOwnerName(property.getUser().getCustomerEntity().getName() + " " +  property.getUser().getCustomerEntity().getSurname());
         dto.setAddress(property.getAddress());
         if(property.getUser().getRoles().toString().contains("P")){
             dto.setPremium(true);
