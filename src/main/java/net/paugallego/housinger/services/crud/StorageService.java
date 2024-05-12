@@ -100,4 +100,19 @@ public class StorageService {
         }
         return null;
     }
+
+    public void deleteImagesFromFileSystem(List<String> fileNames) {
+        for (String fileName : fileNames) {
+            File file = new File(FOLDER_PATH + fileName);
+            if (file.exists()) {
+                if (file.delete()) {
+                    System.out.println("File deleted successfully: " + fileName);
+                } else {
+                    System.err.println("Failed to delete file: " + fileName);
+                }
+            } else {
+                System.out.println("File does not exist: " + fileName);
+            }
+        }
+    }
 }

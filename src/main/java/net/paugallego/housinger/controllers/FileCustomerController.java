@@ -72,10 +72,11 @@ public class FileCustomerController {
                 return ResponseEntity.notFound().build();
             }
 
-           String response = storageService.uploadImageToFileSystemProperty(files, propertyId);
+            storageService.deleteImagesFromFileSystem(property.getFotos());
+            String response = storageService.uploadImageToFileSystemProperty(files, propertyId);
 
 
-            return ResponseEntity.status(HttpStatus.OK).body(response);
+            return ResponseEntity.status(HttpStatus.OK).body(property.getFotos());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading property photos: " + e.getMessage());
         }

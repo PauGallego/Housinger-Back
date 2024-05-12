@@ -32,10 +32,7 @@ public class OncePerRequestFilterImplementation extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
 
         String header = httpServletRequest.getHeader(SecurityConstants.HEADER);
-        if (header != null) {
-            System.out.println("header: " + header);
-            System.out.println("aaaaa: " + !header.startsWith(SecurityConstants.TOKEN_PREFIX));
-        }
+
         if (header == null || !header.startsWith("Authentication " + SecurityConstants.TOKEN_PREFIX)) {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
 
