@@ -16,10 +16,7 @@ import net.paugallego.housinger.services.crud.entity.CalendarCRUDService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -45,6 +42,24 @@ public class BedCrudController extends AbstractController<BedEntity, BedDTO, Bed
             List<BedDTO> dtos = converter.convertFromEntities(repository.findByProperty(propertyRepository.findById(id).orElse(null)));
 
             return ResponseEntity.status(HttpStatus.OK).body(dtos);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiErrorEnum.INDETERMINATE_ERROR);
+        }
+    }
+
+    @DeleteMapping("/deletebyProperty/{id}")
+    public ResponseEntity<?> deleteByProp(@PathVariable Long id) {
+        try {
+
+            List<BedEntity> entites = repository.findByProperty(propertyRepository.findById(id).orElse(null));
+
+            for(BedEntity entity : entites){
+
+                repository.delete(entity);
+            }
+
+            return ResponseEntity.status(HttpStatus.OK).body("donete");
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiErrorEnum.INDETERMINATE_ERROR);
