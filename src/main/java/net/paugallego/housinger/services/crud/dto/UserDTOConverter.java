@@ -7,6 +7,7 @@ import net.paugallego.housinger.model.database.repositories.CustomerRepository;
 import net.paugallego.housinger.model.database.repositories.UserRepository;
 import net.paugallego.housinger.model.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,6 +18,11 @@ public class UserDTOConverter extends AbstractDTOConverter<UserEntity, UserDTO> 
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+
     @Override
     public UserEntity convertFromDTO(UserDTO userDTO) {
         UserEntity entity = new UserEntity();
@@ -26,14 +32,22 @@ public class UserDTOConverter extends AbstractDTOConverter<UserEntity, UserDTO> 
         entity.setCreateTime(userDTO.getCreateTime());
         entity.setEnableAccount(userDTO.getEnableAccount());
         entity.setRoles(userDTO.getRoles());
-        entity.setPassword(userDTO.getPassword());
+        entity.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         entity.setDeleteTime(userDTO.getDeleteTime());
         entity.setLastPasswordChange(userDTO.getLastPasswordChange());
         entity.setNextPasswordChange(userDTO.getNextPasswordChange());
         entity.setReasonForExpiredAccount(userDTO.getReasonForExpiredAccount());
         entity.setUsername(userDTO.getUsername());
         entity.setUpdateTime(userDTO.getUpdateTime());
-        entity.setCustomerEntity(customerRepository.findById(userDTO.getCustomerEntityId()).orElse(null) );
+
+        CustomerEntity customer = customerRepository.findById(userDTO.getCustomerEntityId()).orElse(null);
+
+        customer.setName(userDTO.getName());
+        customer.setSurname(userDTO.getSurname());
+
+        customerRepository.save(customer);
+
+        entity.setCustomerEntity(customer );
 
         return entity;
 
@@ -56,6 +70,9 @@ public class UserDTOConverter extends AbstractDTOConverter<UserEntity, UserDTO> 
         dto.setReasonForExpiredAccount(entity.getReasonForExpiredAccount());
         dto.setUsername(entity.getUsername());
         dto.setUpdateTime(entity.getUpdateTime());
+        dto.setName(entity.getCustomerEntity().getName());
+        dto.setSurname(entity.getCustomerEntity().getSurname());
+        dto.setPicture(entity.getCustomerEntity().getPicture());
 
 
 

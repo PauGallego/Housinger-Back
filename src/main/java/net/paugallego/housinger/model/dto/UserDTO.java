@@ -32,4 +32,7 @@ public class UserDTO {
     private LocalDateTime nextPasswordChange;
     private Set<RoleEnum> roles;
     private Long customerEntityId;
+    private String name;
+    private String surname;
+    private String picture;
 }

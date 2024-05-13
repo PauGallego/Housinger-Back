@@ -36,9 +36,26 @@ public class StorageService {
     public String uploadImageToFileSystemCustomer(MultipartFile file, Long customerId) throws IOException {
         Optional<CustomerEntity> customerOptional = customerRepository.findById(customerId);
         if (customerOptional.isPresent()) {
+            CustomerEntity customer = customerOptional.get();
+            String oldFileName = customer.getPicture();
+
+            // Borra la foto antigua si existe
+            if (oldFileName != null) {
+                File oldFile = new File(FOLDER_PATH + oldFileName);
+                if (oldFile.exists()) {
+                    if (oldFile.delete()) {
+                        System.out.println("Old file deleted successfully: " + oldFileName);
+                    } else {
+                        System.err.println("Failed to delete old file: " + oldFileName);
+                    }
+                } else {
+                    System.out.println("Old file does not exist: " + oldFileName);
+                }
+            }
+
             String originalFileName = file.getOriginalFilename();
-            String fileName = UUID.randomUUID().toString() + "_" + originalFileName;
-            String filePath = FOLDER_PATH + fileName;
+            String newFileName = UUID.randomUUID().toString() + "_" + originalFileName;
+            String filePath = FOLDER_PATH + newFileName;
 
             File directory = new File(FOLDER_PATH);
             if (!directory.exists()) {
@@ -48,18 +65,15 @@ public class StorageService {
             File dest = new File(filePath);
             file.transferTo(dest);
 
-            CustomerEntity customer = customerOptional.get();
-            customer.setPicture(fileName);
+            customer.setPicture(newFileName);
             customerRepository.save(customer);
 
             return "File uploaded successfully: " + filePath;
         } else {
             throw new IllegalArgumentException("Customer with ID " + customerId + " not found");
         }
-
-
-
     }
+
 
     public String uploadImageToFileSystemProperty(List<MultipartFile> files, Long propertyId) throws IOException {
         Optional<PropertyEntity> propertyEntity = propertyRepository.findById(propertyId);
