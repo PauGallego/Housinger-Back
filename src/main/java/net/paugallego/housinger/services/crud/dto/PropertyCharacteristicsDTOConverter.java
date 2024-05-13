@@ -26,7 +26,15 @@ public class PropertyCharacteristicsDTOConverter {
 
       PropertyCharacteristicsDTO dto = new PropertyCharacteristicsDTO();
         dto.setPropertyId(property.getId());
-        dto.setFoto(property.getFotos().iterator().next());
+
+
+        List<String> fotos = property.getFotos();
+        if (fotos != null && !fotos.isEmpty()) {
+            dto.setFoto(fotos.iterator().next());
+        } else {
+            dto.setFoto(null);
+        }
+
         dto.setOwnerName(property.getUser().getCustomerEntity().getName() + " " +  property.getUser().getCustomerEntity().getSurname());
         dto.setAddress(property.getAddress());
 
