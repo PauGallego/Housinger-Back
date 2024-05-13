@@ -2,8 +2,10 @@ package net.paugallego.housinger.services.crud.entity;
 
 import net.paugallego.housinger.model.database.entities.CalendarEntity;
 import net.paugallego.housinger.model.database.entities.PropertyEntity;
+import net.paugallego.housinger.model.database.entities.UserEntity;
 import net.paugallego.housinger.model.database.repositories.CalendarRepository;
 import net.paugallego.housinger.model.database.repositories.PropertyRepository;
+import net.paugallego.housinger.model.database.repositories.UserRepository;
 import net.paugallego.housinger.model.dto.PropertyCharacteristicsDTO;
 import net.paugallego.housinger.services.crud.dto.PropertyCharacteristicsDTOConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +25,27 @@ public class PropertyLocationCRUDService {
 
     @Autowired
     PropertyCharacteristicsDTOConverter dtoConverter;
+
+    @Autowired
+    UserRepository userRepository;
+
     public List<PropertyCharacteristicsDTO> findByLocation(String address) {
 
         List<PropertyEntity> properties = propertyRepository.findByAddressContaining(address);
+
+
+
+        return dtoConverter.convertFromEntities(properties);
+
+    }
+
+    public List<PropertyCharacteristicsDTO> findByUser(Long userId) {
+
+
+        UserEntity user = userRepository.findById(userId).orElse(null);
+
+
+        List<PropertyEntity> properties = propertyRepository.findByUser(user);
 
 
 
