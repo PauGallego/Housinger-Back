@@ -16,6 +16,7 @@ public class BedEntity {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "bedType_id", referencedColumnName = "id")
+
     private BedTypeEntity bedType;
     private String number;
     @ManyToOne
