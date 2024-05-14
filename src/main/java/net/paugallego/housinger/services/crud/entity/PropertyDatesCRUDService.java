@@ -6,7 +6,9 @@ import net.paugallego.housinger.model.database.entities.PropertyEntity;
 import net.paugallego.housinger.model.database.repositories.CalendarRepository;
 import net.paugallego.housinger.model.database.repositories.CharacteristicRepository;
 import net.paugallego.housinger.model.database.repositories.PropertyRepository;
+import net.paugallego.housinger.model.dto.CalendarDTO;
 import net.paugallego.housinger.model.dto.PropertyCharacteristicsDTO;
+import net.paugallego.housinger.services.crud.dto.CalendarDTOConverter;
 import net.paugallego.housinger.services.crud.dto.PropertyCharacteristicsDTOConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,11 @@ public class PropertyDatesCRUDService {
 
     @Autowired
     PropertyCharacteristicsDTOConverter dtoConverter;
+
+    @Autowired
+    CalendarDTOConverter calendarDTOConverter;
+
+
     public List<PropertyCharacteristicsDTO> findByDate(Date start, Date end) {
         List<PropertyEntity> properties = new ArrayList<>();
         List<CalendarEntity> calendars = calendarRepository.findAll();
@@ -55,6 +62,16 @@ public class PropertyDatesCRUDService {
     public List<PropertyCharacteristicsDTO> findAll() {
 
         return dtoConverter.convertFromEntities(propertyRepository.findAll());
+    }
+
+
+    public CalendarDTO findByProperty(Long id){
+
+        PropertyEntity property = propertyRepository.findById(id).orElse(null);
+
+
+        assert property != null;
+        return  calendarDTOConverter.convertFromEntity(property.getCalendar());
     }
 
 }

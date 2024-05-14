@@ -50,6 +50,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/v1/premium/**").hasAnyRole("P","A","U")
                     .antMatchers("/v1/recover/**").permitAll()
                     .antMatchers("/v1/propertyUser/**").permitAll()
+                    .antMatchers("/v1/reservation/**").permitAll()
+                    .antMatchers("/v1/propertyCalendar").permitAll()
                     .antMatchers("/ws/**").permitAll()
                     .antMatchers("/v1/fileCustomer/upload/**").permitAll()
                     .antMatchers("/v1/propertyCharacteristics/**").permitAll()

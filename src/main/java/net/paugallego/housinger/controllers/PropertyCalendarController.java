@@ -1,6 +1,7 @@
 package net.paugallego.housinger.controllers;
 
 import net.paugallego.housinger.exceptions.ApiErrorEnum;
+import net.paugallego.housinger.model.dto.CalendarDTO;
 import net.paugallego.housinger.model.dto.FindPropertyByCharacteristicsDTO;
 import net.paugallego.housinger.model.dto.FindPropertyByDateDTO;
 import net.paugallego.housinger.model.dto.PropertyCharacteristicsDTO;
@@ -23,6 +24,8 @@ public class PropertyCalendarController {
 
     @Autowired
     PropertyDatesCRUDService service;
+
+
 
     @PostMapping("/get")
     public ResponseEntity<?> getByDTO(@RequestBody FindPropertyByDateDTO dto) {
@@ -50,5 +53,21 @@ public class PropertyCalendarController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiErrorEnum.INDETERMINATE_ERROR);
         }
     }
+
+
+
+    @GetMapping("/getByProperty/{id}")
+    public ResponseEntity<?> getByProperty(@PathVariable Long id) {
+        try {
+            CalendarDTO dto = service.findByProperty(id);
+            return ResponseEntity.status(HttpStatus.OK).body(dto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiErrorEnum.INDETERMINATE_ERROR);
+        }
+    }
+
+
+
 
 }

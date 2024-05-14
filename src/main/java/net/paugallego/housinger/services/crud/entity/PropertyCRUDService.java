@@ -34,11 +34,15 @@ public class PropertyCRUDService extends AbstractCRUDService<PropertyEntity, Pro
 
     @Autowired
     ReservationRepository repo5;
+
+
+    @Autowired
+    CalendarRepository repo6;
+
+
     public PropertyDTO createnewById(Long id, String address){
 
         PropertyEntity property = new PropertyEntity();
-
-
 
         UserEntity user = new UserEntity();
 
@@ -47,7 +51,19 @@ public class PropertyCRUDService extends AbstractCRUDService<PropertyEntity, Pro
         property.setUser(user);
         property.setAddress(address);
 
+        CalendarEntity calendar = new CalendarEntity();
+
+
+
+        repo6.save(calendar);
+
+        property.setCalendar(calendar);
+
         repo2.save(property);
+
+
+
+
 
         return convertidor.convertFromEntity(property);
 
