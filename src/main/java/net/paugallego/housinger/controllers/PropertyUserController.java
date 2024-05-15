@@ -37,6 +37,19 @@ public class PropertyUserController {
         }
     }
 
+    @GetMapping("/getCustomer/{userId}")
+    public ResponseEntity<?> getByDTOCustomer(@PathVariable("userId") Long id) {
+        try {
+
+            List<PropertyCharacteristicsDTO> dtos = service.findByCustomer(id);
+
+            return ResponseEntity.status(HttpStatus.OK).body(dtos);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiErrorEnum.INDETERMINATE_ERROR);
+        }
+    }
+
 
     @GetMapping("/get/all")
     public ResponseEntity<?> getAll() {

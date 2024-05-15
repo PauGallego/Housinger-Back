@@ -71,6 +71,7 @@ public class TokenMailingController {
                 try {
                     htmlContent = new String(Files.readAllBytes(Paths.get("src/main/resources/static/changepass.html")));
                     htmlContent = htmlContent.replace("{{userId}}", String.valueOf(entity.getUserEntity().getId()));
+                    htmlContent = htmlContent.replace("{{userName}}", String.valueOf(entity.getUserEntity().getUsername()));
                     htmlContent = htmlContent.replace("{{url}}", url);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -100,9 +101,12 @@ public class TokenMailingController {
                 userRepository.save(user);
                 Resource resource = new ClassPathResource("static/success.html");
 
-                TokenMailingEntity token = tokenRepo.findByUserEntityAndType(user, "password");
+                TokenMailingEntity token = tokenRepo.findByUserEntityAndType(user, "password").orElse(null);
 
-                tokenRepo.delete(token);
+                if (token != null){
+                    tokenRepo.delete(token);
+                }
+
 
                 return ResponseEntity.ok().body(resource);
             } else {
@@ -157,6 +161,12 @@ public class TokenMailingController {
 
             String token2 = generateRandomToken();
 
+            TokenMailingEntity token5 = tokenRepo.findByUserEntityAndType(user,"password").orElse(null);
+
+
+            if (token5 != null){
+                tokenRepo.delete(token5);
+            }
 
             token.setUserEntity(user);
             token.setType("password");

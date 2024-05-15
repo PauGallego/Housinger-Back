@@ -4,20 +4,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Change Password</title>
+    <style>
+        /* Fonts */
+        @import url("https://fonts.googleapis.com/css2?family=Karma:wght@300;400;500;600;700&display=swap");
+
+        /* Reset Styles */
+        body,
+        html {
+            font-family: "Karma", serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fafafa;
+        }
+
+        /* Header Styles */
+        .contendor-header {
+            background-color: #a5d7e8;
+            height: 150px;
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .contendor-header img {
+            height: 50px;
+            width: auto;
+            margin-left: 15px;
+        }
+
+        .titulo-logo {
+            color: #576cbc;
+            margin-left: 15px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* Form Styles */
+        h2 {
+            color: #576cbc;
+            font-size: 25px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        form {
+            background-color: #d0d6ea;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 0 5px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-left: 5px;
+        }
+
+        input[type="password"] {
+            border: 2px solid #ccc;
+            box-shadow: 1px 1px 1px #999;
+            margin-left: 5px;
+            margin-top: 2px;
+        }
+
+        .enviar-cambio {
+            background-color: #576cbc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            height: 40px;
+            width: 80px;
+            margin-left: 5px;
+        }
+    </style>
 </head>
 <body>
-<h2>Change Password</h2>
-<form id="passwordForm" method="post">
-    <input type="hidden" id="userId" name="id" value="{{userId}}">
-    <input type="hidden" id="url" value="{{url}}">
-    <label for="password">New Password:</label><br>
-    <input type="password" id="password" name="password"><br><br>
-    <input type="submit" value="Submit">
-</form>
-
+<div class="contendor-header">
+    <div>
+        <h2 class="titulo-logo">HOUSINGER</h2>
+    </div>
+</div>
+<h2>Cambio de contraseña</h2>
+<div class="form-container">
+    <p>Tu usuario es : {{userName}} </p>
+    <form id="passwordForm" method="post">
+        <input type="hidden" id="userId" name="id" value="{{userId}}">
+        <input type="hidden" id="url" value="{{url}}">
+        <label for="password">Contraseña:</label><br>
+        <input type="password" id="password" name="password"><br><br>
+        <label for="password2">Confirmar contraseña:</label><br>
+        <input type="password" id="password2" name="password"><br><br>
+        <input type="submit" value="Submit" class="enviar-cambio">
+    </form>
+</div>
 <script>
     var url = document.getElementById('url').value;
-    document.getElementById('passwordForm').action = url + '/v1/recover/success'; // Añadido '/' antes de 'v1'
+    document.getElementById('passwordForm').action = url + '/v1/recover/success';
 </script>
 </body>
 </html>

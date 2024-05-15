@@ -71,7 +71,7 @@ public class ReservationCrudController extends AbstractController<ReservationEnt
 
             String formattedDateStart = dateFormat.format(dateStart);
             String formattedDateEnd = dateFormat.format(dateEnd);
-            String mensaje = "Me gustaría intercambiar propiedades, sería la propiedad ubicada en "
+            String mensaje = "Me gustaría intercambiar propiedades, estoy interesado en la propiedad ubicada en:  "
                     + proposerProperty.getAddress()
                     + " entre las fechas de: "
                     + formattedDateStart
