@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -63,7 +64,21 @@ public class ReservationCrudController extends AbstractController<ReservationEnt
 
             message.setStatus(Status.MESSAGE);
 
-            message.setMessage("Me gustaria intercambiar propiedades, seria la propiedad ubicada en " + proposerProperty.getAddress() + " entre las fechas de :" + dto.getDateStart() + "/" + dto.getDateEnd()) ;
+            Date dateStart = dto.getDateStart();
+            Date dateEnd = dto.getDateEnd();
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+            String formattedDateStart = dateFormat.format(dateStart);
+            String formattedDateEnd = dateFormat.format(dateEnd);
+            String mensaje = "Me gustaría intercambiar propiedades, sería la propiedad ubicada en "
+                    + proposerProperty.getAddress()
+                    + " entre las fechas de: "
+                    + formattedDateStart
+                    + " - "
+                    + formattedDateEnd;
+
+            message.setMessage(mensaje) ;
 
             chatRepository.save(message);
 
