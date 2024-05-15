@@ -25,7 +25,10 @@ public class PropertyCharacteristicsDTOConverter {
     public PropertyCharacteristicsDTO convertFromEntity(PropertyEntity property) {
 
       PropertyCharacteristicsDTO dto = new PropertyCharacteristicsDTO();
-        dto.setPropertyId(property.getId());
+      if (property == null){
+          return dto;
+      }
+      dto.setPropertyId(property.getId());
 
 
         List<String> fotos = property.getFotos();
