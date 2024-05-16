@@ -3,10 +3,8 @@ package net.paugallego.housinger.controllers;
 import net.paugallego.housinger.exceptions.ApiErrorEnum;
 import net.paugallego.housinger.model.database.entities.*;
 import net.paugallego.housinger.model.database.repositories.*;
-import net.paugallego.housinger.model.dto.CalendarDTO;
-import net.paugallego.housinger.model.dto.ReservationDTO;
-import net.paugallego.housinger.model.dto.ReservationProposalDTO;
-import net.paugallego.housinger.model.dto.ReviewDTO;
+import net.paugallego.housinger.model.dto.*;
+import net.paugallego.housinger.services.crud.dto.MessageDTOConverter;
 import net.paugallego.housinger.services.crud.dto.ReservationDTOConverter;
 import net.paugallego.housinger.services.crud.dto.ReviewDTOConverter;
 import net.paugallego.housinger.services.crud.entity.PropertyDatesCRUDService;
@@ -16,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
@@ -47,6 +48,9 @@ public class ReservationCrudController extends AbstractController<ReservationEnt
     @Autowired
     ReservationDTOConverter dtoConverter;
 
+    @Autowired
+    MessageDTOConverter messageDTOConverter;
+
     @Value("${spring.default.url2}")
     private String url;
 
@@ -54,6 +58,9 @@ public class ReservationCrudController extends AbstractController<ReservationEnt
         SimpleDateFormat formatter = new SimpleDateFormat("dd/M/yyyy, HH:mm:ss");
         return formatter.format(date);
     }
+
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
 
 
     @PostMapping("/sendMessage")
@@ -126,9 +133,15 @@ public class ReservationCrudController extends AbstractController<ReservationEnt
             message.setMessage(mensaje) ;
 
 
+
+            simpMessagingTemplate.convertAndSendToUser(message.getReceiver().getId().toString(), "/private", messageDTOConverter.convertFromEntity(message));
+
+
             chatRepository.save(message);
 
             return ResponseEntity.ok().body(dtoRes);
+
+
 
 
         } catch (Exception e) {
@@ -146,24 +159,23 @@ public class ReservationCrudController extends AbstractController<ReservationEnt
 
             Date today = new Date();
 
-
-
             message.setDate(formatDate(today));
 
-            CustomerEntity customerSender = customerRepository.findById(senderId).orElse(null);
-            CustomerEntity customerReceiver = customerRepository.findById(receiverId).orElse(null);
+            UserEntity senderUser = userRepository.findById(senderId).orElse(null);
+            UserEntity receiverUser = userRepository.findById(receiverId).orElse(null);
 
-            message.setSender( customerSender);
 
-            message.setReceiver(customerReceiver);
+            message.setSender( senderUser.getCustomerEntity());
+
+            message.setReceiver(receiverUser.getCustomerEntity());
 
             message.setStatus(Status.MESSAGE);
 
             ReservationEntity reservation = reservationRepository.findById(id).orElse(null);
 
-
-
             String mensaje = "He decidido no aceptar tu propuesta de la propiedad ubicada en: <br> ";
+
+            assert reservation != null;
             mensaje += reservation.getReservationProperty().getAddress();
 
 
@@ -171,6 +183,7 @@ public class ReservationCrudController extends AbstractController<ReservationEnt
 
             reservationRepository.delete(reservation);
 
+            simpMessagingTemplate.convertAndSendToUser(message.getReceiver().getId().toString(), "/private",  messageDTOConverter.convertFromEntity(message));
 
             chatRepository.save(message);
 
@@ -182,6 +195,9 @@ public class ReservationCrudController extends AbstractController<ReservationEnt
         }
 
     }
+
+
+
 
 
 }
