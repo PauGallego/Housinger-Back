@@ -13,6 +13,7 @@ import net.paugallego.housinger.services.crud.entity.PropertyDatesCRUDService;
 import net.paugallego.housinger.services.crud.entity.ReservationCRUDService;
 import net.paugallego.housinger.services.crud.entity.ReviewCRUDService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,11 +34,26 @@ public class ReservationCrudController extends AbstractController<ReservationEnt
     @Autowired
     UserRepository userRepository;
 
+
+    @Autowired
+    PropertyRepository propertyRepository;
+
+    @Autowired
+    ReservationRepository reservationRepository;
+
     @Autowired
     CustomerRepository customerRepository;
 
     @Autowired
-    PropertyRepository propertyRepository;
+    ReservationDTOConverter dtoConverter;
+
+    @Value("${spring.default.url2}")
+    private String url;
+
+    public static String formatDate(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/M/yyyy, HH:mm:ss");
+        return formatter.format(date);
+    }
 
 
     @PostMapping("/sendMessage")
@@ -48,7 +64,7 @@ public class ReservationCrudController extends AbstractController<ReservationEnt
 
             Date today = new Date();
 
-            message.setDate(today.toString());
+            message.setDate(formatDate(today));
 
             //User que lo manda
             UserEntity proproserUser = userRepository.findById(dto.getReservationUserId()).orElse(null);
@@ -71,23 +87,100 @@ public class ReservationCrudController extends AbstractController<ReservationEnt
 
             String formattedDateStart = dateFormat.format(dateStart);
             String formattedDateEnd = dateFormat.format(dateEnd);
-            String mensaje = "Me gustaría intercambiar propiedades, estoy interesado en la propiedad ubicada en:  "
+
+
+            ReservationEntity reservation = new ReservationEntity();
+            reservation.setReservationProperty(proposerProperty);
+            reservation.setReservationUser(proproserUser);
+            reservation.setDateEnd(dateEnd);
+            reservation.setDateStart(dateStart);
+            reservation.setType("proposal");
+
+
+             List<ReservationEntity> reservaciones = reservationRepository.findByReservationPropertyAndReservationUserAndType(proposerProperty, proproserUser, "proposal").orElse(null);
+
+            for (ReservationEntity entity: reservaciones){
+
+                reservationRepository.delete(entity);
+            }
+
+            reservationRepository.save(reservation);
+
+             ReservationDTO dtoRes = dtoConverter.convertFromEntity(reservation);
+
+
+            String mensaje = "Me gustaría intercambiar propiedades, estoy interesado en la propiedad ubicada en: <br>  "
                     + proposerProperty.getAddress()
-                    + " entre las fechas de: "
+                    + "  <br> entre las fechas de: "
                     + formattedDateStart
                     + " - "
                     + formattedDateEnd;
 
+            mensaje += " <br> <a   href=" + url + "/seeProposal?id=" + dtoRes.getId() + " " +  " class="  +"font-bold text-sky-500>";
+
+
+            mensaje += "Ver Propuesta " ;
+
+            mensaje += "</a>";
+
             message.setMessage(mensaje) ;
+
 
             chatRepository.save(message);
 
-            return ResponseEntity.ok().body("donete");
+            return ResponseEntity.ok().body(dtoRes);
 
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar la solicitud: " + e.getMessage());
         }
+    }
+
+    @GetMapping("/declineOffer/{id}/{senderId}/{receiverId}")
+    public ResponseEntity<?> sendMessage( @PathVariable Long id, @PathVariable Long senderId, @PathVariable Long receiverId ) {
+
+
+        try {
+
+            MessageEntity message = new MessageEntity();
+
+            Date today = new Date();
+
+
+
+            message.setDate(formatDate(today));
+
+            CustomerEntity customerSender = customerRepository.findById(senderId).orElse(null);
+            CustomerEntity customerReceiver = customerRepository.findById(receiverId).orElse(null);
+
+            message.setSender( customerSender);
+
+            message.setReceiver(customerReceiver);
+
+            message.setStatus(Status.MESSAGE);
+
+            ReservationEntity reservation = reservationRepository.findById(id).orElse(null);
+
+
+
+            String mensaje = "He decidido no aceptar tu propuesta de la propiedad ubicada en: <br> ";
+            mensaje += reservation.getReservationProperty().getAddress();
+
+
+            message.setMessage(mensaje) ;
+
+            reservationRepository.delete(reservation);
+
+
+            chatRepository.save(message);
+
+            return ResponseEntity.ok().body("ok");
+
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar la solicitud: " + e.getMessage());
+        }
+
     }
 
 

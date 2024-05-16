@@ -24,6 +24,8 @@ public class MessageEntity {
     @JoinColumn(name = "receiver_id", referencedColumnName = "id")
     private CustomerEntity receiver;
 
+
+    @Column(columnDefinition = "TEXT")
     private String message;
 
     private String date;

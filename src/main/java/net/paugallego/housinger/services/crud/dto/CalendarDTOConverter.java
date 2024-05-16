@@ -7,6 +7,9 @@ import net.paugallego.housinger.model.dto.CalendarDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.List;
+
 
 @Service
 public class CalendarDTOConverter extends AbstractDTOConverter<CalendarEntity, CalendarDTO> {
@@ -31,7 +34,14 @@ public class CalendarDTOConverter extends AbstractDTOConverter<CalendarEntity, C
     public CalendarDTO convertFromEntity(CalendarEntity entity) {
         CalendarDTO dto = new CalendarDTO();
 
-        dto.setReservedDates(entity.getReservedDates());
+        List<Date> lista = List.of();
+
+        if (entity.getReservedDates() != null){
+            dto.setReservedDates(entity.getReservedDates());
+        }else{
+            dto.setReservedDates(lista);
+        }
+
         dto.setId(entity.getId());
 
         if (entity.getProperty() != null) {

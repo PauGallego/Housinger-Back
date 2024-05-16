@@ -28,5 +28,6 @@ public class ReservationEntity implements Serializable {
     private PropertyEntity reservationProperty;
     private Date dateStart;
     private Date dateEnd;
+    private String type;
 
 }

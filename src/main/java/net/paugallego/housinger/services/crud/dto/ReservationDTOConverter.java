@@ -32,6 +32,7 @@ public class ReservationDTOConverter extends AbstractDTOConverter<ReservationEnt
         entity.setReservationProperty(reservationProperty);
 
         entity.setId(reservationDTO.getId());
+        entity.setType(reservationDTO.getType());
 
         return entity;
     }
@@ -52,6 +53,13 @@ public class ReservationDTOConverter extends AbstractDTOConverter<ReservationEnt
         }
 
         dto.setId(entity.getId());
+        dto.setProposerName(entity.getReservationUser().getCustomerEntity().getName());
+        dto.setProposerSurname(entity.getReservationUser().getCustomerEntity().getSurname());
+        dto.setProposerPicture(entity.getReservationUser().getCustomerEntity().getPicture());
+        dto.setPropertyPicture(entity.getReservationProperty().getFotos().stream().findFirst().orElse(null));
+        dto.setPropertyAddress(entity.getReservationProperty().getAddress());
+        dto.setReceiverUserId(entity.getReservationProperty().getUser().getId());
+        dto.setType(entity.getType());
 
         return dto;
     }

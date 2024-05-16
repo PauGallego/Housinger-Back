@@ -17,4 +17,13 @@ public class ReservationDTO {
     private Long reservationPropertyId;
     private Date dateStart;
     private Date dateEnd;
+    private String proposerName;
+    private String proposerSurname;
+    private String proposerPicture;
+    private String propertyPicture;
+    private String propertyAddress;
+    private Long receiverUserId;
+    private String type;
+
+
 }
