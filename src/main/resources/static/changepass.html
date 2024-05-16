@@ -58,7 +58,6 @@
         form {
             background-color: #d0d6ea;
             padding: 10px;
-            border-radius: 10px;
             margin: 0 5px;
         }
 
@@ -83,6 +82,31 @@
             width: 80px;
             margin-left: 5px;
         }
+
+        .contedor-nombre {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #576cbc;
+            width: 200px;
+            color: white;
+            margin: auto;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .contedor-mensaje {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #e2e8ff;
+            width: 200px;
+            color: red;
+            margin: auto;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
     </style>
 </head>
 <body>
@@ -92,8 +116,11 @@
     </div>
 </div>
 <h2>Cambio de contraseña</h2>
+<div class="contedor-nombre">
+    <p>Tu usuario: {{userName}} </p>
+</div>
+
 <div class="form-container">
-    <p>Tu usuario es : {{userName}} </p>
     <form id="passwordForm" method="post">
         <input type="hidden" id="userId" name="id" value="{{userId}}">
         <input type="hidden" id="url" value="{{url}}">
@@ -104,7 +131,26 @@
         <input type="submit" value="Submit" class="enviar-cambio">
     </form>
 </div>
+<div class="contedor-mensaje">
+    <span id="error-mensaje"></span>
+</div>
+
 <script>
+    let errorMensaje = document.getElementById('error-mensaje');
+
+    document.getElementById('passwordForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        let password = document.getElementById('password').value;
+        let password2 = document.getElementById('password2').value;
+
+        if (password !== password2) {
+            errorMensaje.innerText = 'Las contraseñas no coinciden';
+            return;
+        }
+
+        this.submit();
+    });
+
     var url = document.getElementById('url').value;
     document.getElementById('passwordForm').action = url + '/v1/recover/success';
 </script>
