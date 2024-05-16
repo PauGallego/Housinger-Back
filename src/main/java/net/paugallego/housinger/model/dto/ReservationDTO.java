@@ -24,6 +24,7 @@ public class ReservationDTO {
     private String propertyAddress;
     private Long receiverUserId;
     private String type;
+    private Long reservationCustomerId;
 
 
 }
