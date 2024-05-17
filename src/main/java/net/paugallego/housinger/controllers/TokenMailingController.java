@@ -63,10 +63,14 @@ public class TokenMailingController {
     @GetMapping("/recover/{token}")
     public ResponseEntity<?> recover(@PathVariable String token) {
         try {
-            TokenMailingEntity entity = repository.findByToken(token);
+            TokenMailingEntity entity = repository.findByToken(token).orElse(null);
 
-            if (Objects.equals(entity.getType(),"password")) {
+            if (entity == null) {
+                Resource resource = new ClassPathResource("static/error.html");
+                return ResponseEntity.ok().body(resource);
+            }
 
+            if (Objects.equals(entity.getType(), "password")) {
                 String htmlContent = "";
                 try {
                     htmlContent = new String(Files.readAllBytes(Paths.get("src/main/resources/static/changepass.html")));
@@ -76,9 +80,7 @@ public class TokenMailingController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
                 return ResponseEntity.ok().body(htmlContent);
-
             } else {
                 Resource resource = new ClassPathResource("static/error.html");
                 return ResponseEntity.ok().body(resource);
@@ -90,27 +92,27 @@ public class TokenMailingController {
         }
     }
 
+
     @PostMapping("/recover/success")
-    public ResponseEntity<?> recoverSuccess(@RequestParam Long id, @RequestParam String password) {
+    public ResponseEntity<Resource> recoverSuccess(@RequestParam Long id, @RequestParam String password) {
         try {
+
             UserEntity user = userRepository.findById(id).orElse(null);
 
             if (user != null) {
+
                 String encodedPassword = passwordEncoder.encode(password);
+
                 user.setPassword(encodedPassword);
+
                 userRepository.save(user);
+
+                tokenRepo.findByUserEntityAndType(user, "password").ifPresent(token -> tokenRepo.delete(token));
+
                 Resource resource = new ClassPathResource("static/success.html");
-
-                TokenMailingEntity token = tokenRepo.findByUserEntityAndType(user, "password").orElse(null);
-
-                if (token != null){
-                    tokenRepo.delete(token);
-                }
-
-
                 return ResponseEntity.ok().body(resource);
             } else {
-                Resource errorResource = new ClassPathResource("static/error.html");
+
                 return ResponseEntity.ok().body(errorResource);
             }
         } catch (Exception e) {
@@ -118,13 +120,17 @@ public class TokenMailingController {
             Resource errorResource = new ClassPathResource("static/error.html");
             return ResponseEntity.ok().body(errorResource);
         }
-    }
+    }     Resource errorResource = new ClassPathResource("static/error.html");
+
+
 
 
     @GetMapping("/enable/{token}")
     public ResponseEntity<?> enable(@PathVariable String token) {
         try {
-            TokenMailingEntity entity = repository.findByToken(token);
+            TokenMailingEntity entity = repository.findByToken(token).orElse(null);
+
+
 
             if (Objects.equals(entity.getType(), "enable") && !entity.getUserEntity().isEnabled()){
                 entity.getUserEntity().setEnableAccount(true);

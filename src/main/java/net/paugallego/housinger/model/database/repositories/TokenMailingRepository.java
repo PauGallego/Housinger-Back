@@ -7,6 +7,6 @@ import java.util.Optional;
 
 @Repository
 public interface TokenMailingRepository extends JpaRepository<TokenMailingEntity, Long> {
-    TokenMailingEntity findByToken(String token);
+    Optional<TokenMailingEntity> findByToken(String token);
     Optional<TokenMailingEntity> findByUserEntityAndType(UserEntity user, String type);
 }
