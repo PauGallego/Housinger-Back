@@ -29,5 +29,6 @@ public class ReservationEntity implements Serializable {
     private Date dateStart;
     private Date dateEnd;
     private String type;
+    private Date confirmationDate;
 
 }

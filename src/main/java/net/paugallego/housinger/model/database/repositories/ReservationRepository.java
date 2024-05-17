@@ -4,6 +4,7 @@ import net.paugallego.housinger.model.database.entities.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,8 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
     Optional<List<ReservationEntity>> findByReservationPropertyAndReservationUserAndType(PropertyEntity property, UserEntity user, String type);
 
     List<ReservationEntity> findByReservationUser(UserEntity user);
+
+    ReservationEntity findByReservationUserAndConfirmationDate(UserEntity user, Date date);
 
 
 

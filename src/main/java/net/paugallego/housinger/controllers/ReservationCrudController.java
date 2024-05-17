@@ -20,6 +20,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -374,11 +375,17 @@ public class ReservationCrudController extends AbstractController<ReservationEnt
 
             reservation.setType("confirmed");
 
+            Date today_date = new Date();
+
+            reservation.setConfirmationDate(today_date);
+
             reservationRepository.save(reservation);
 
             ReservationEntity reservation2 = reservationRepository.findById(id2).orElse(null);
 
             reservation2.setType("confirmed");
+
+            reservation2.setConfirmationDate(today_date);
 
             reservationRepository.save(reservation2);
 
@@ -429,5 +436,71 @@ public class ReservationCrudController extends AbstractController<ReservationEnt
         }
 
     }
+
+    @DeleteMapping("/deleteTrue/{id}")
+    public ResponseEntity<?> truedelete(@PathVariable Long id) {
+        try {
+            ReservationEntity reservation = reservationRepository.findById(id).orElse(null);
+            Date today = new Date();
+            Calendar threeDaysLater = Calendar.getInstance();
+            threeDaysLater.setTime(today);
+            threeDaysLater.add(Calendar.DAY_OF_MONTH, 3);
+
+            ReservationEntity reservationEntity2 = reservationRepository.findByReservationUserAndConfirmationDate(reservation.getReservationProperty().getUser(), reservation.getConfirmationDate());
+
+
+            if (reservation.getDateStart().before(threeDaysLater.getTime()) || reservation.getDateEnd().before(today) || reservationEntity2.getDateStart().before(threeDaysLater.getTime()) || reservationEntity2.getDateEnd().before(today) )   {
+
+                return ResponseEntity.badRequest().body("no");
+            }
+
+            PropertyEntity property = reservation.getReservationProperty();
+
+            List<Date> reservedDates = property.getCalendar().getReservedDates();
+            reservedDates.removeIf(date -> date.equals(reservation.getDateStart()) || date.equals(reservation.getDateEnd()));
+            propertyRepository.save(property);
+
+            PropertyEntity property2 = reservationEntity2.getReservationProperty();
+
+            List<Date> reservedDates2 = property2.getCalendar().getReservedDates();
+            reservedDates2.removeIf(date -> date.equals(reservationEntity2.getDateStart()) || date.equals(reservationEntity2.getDateEnd()));
+            propertyRepository.save(property2);
+
+            reservationRepository.delete(reservation);
+            reservationRepository.delete(reservationEntity2);
+
+            MessageEntity message = new MessageEntity();
+
+            message.setDate(formatDate(today));
+
+            UserEntity senderUser = reservation.getReservationUser();
+            UserEntity receiverUser = reservationEntity2.getReservationUser();
+
+
+            message.setSender( senderUser.getCustomerEntity());
+
+            message.setReceiver(receiverUser.getCustomerEntity());
+
+            message.setStatus(Status.MESSAGE);
+
+            String mensaje = "He decidido cancelar nuestra reserva pendiente en la direccion:</br>";
+
+            mensaje += reservation.getReservationProperty().getAddress();
+
+            message.setMessage(mensaje);
+
+            simpMessagingTemplate.convertAndSendToUser(message.getReceiver().getId().toString(), "/private",  messageDTOConverter.convertFromEntity(message));
+
+            chatRepository.save(message);
+
+            return ResponseEntity.ok().body("donete");
+
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar la solicitud: " + e.getMessage());
+        }
+
+    }
+
 
 }
