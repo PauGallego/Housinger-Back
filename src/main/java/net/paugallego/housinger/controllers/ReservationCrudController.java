@@ -199,6 +199,7 @@ public class ReservationCrudController extends AbstractController<ReservationEnt
                 reservationRepository.delete(entity);
             }
 
+
             reservationRepository.save(reservation);
 
 
@@ -213,7 +214,7 @@ public class ReservationCrudController extends AbstractController<ReservationEnt
                     + " - "
                     + formattedDateEnd;
 
-            mensaje += " <br> <a   href=" + url + "/seeProposal?id=" + dtoRes.getId() + "?id2= " + previusId +  " " + " class="  +"font-bold text-sky-500>";
+            mensaje += " <br> <a href=" + url + "/seeProposal2?id=" + dtoRes.getId() + "&id2=" + previusId + " class=" + "font-bold text-sky-500>";
 
 
             mensaje += "Ver Propuesta " ;
@@ -285,6 +286,127 @@ public class ReservationCrudController extends AbstractController<ReservationEnt
         }
 
     }
+
+
+    @GetMapping("/declineOfferTrue/{id}/{id2}/{senderId}/{receiverId}")
+    public ResponseEntity<?> sendMessageTrue( @PathVariable Long id,  @PathVariable Long id2, @PathVariable Long senderId, @PathVariable Long receiverId ) {
+
+
+        try {
+
+            MessageEntity message = new MessageEntity();
+
+            Date today = new Date();
+
+            message.setDate(formatDate(today));
+
+            UserEntity senderUser = userRepository.findById(senderId).orElse(null);
+            UserEntity receiverUser = userRepository.findById(receiverId).orElse(null);
+
+
+            message.setSender( senderUser.getCustomerEntity());
+
+            message.setReceiver(receiverUser.getCustomerEntity());
+
+            message.setStatus(Status.MESSAGE);
+
+            ReservationEntity reservation = reservationRepository.findById(id).orElse(null);
+
+            String mensaje = "He decidido no aceptar tu propuesta de la propiedad ubicada en: <br> ";
+
+            assert reservation != null;
+            mensaje += reservation.getReservationProperty().getAddress();
+
+
+            message.setMessage(mensaje) ;
+
+            reservationRepository.delete(reservation);
+
+            ReservationEntity reservation2 = reservationRepository.findById(id2).orElse(null);
+
+            reservationRepository.delete(reservation2);
+
+            simpMessagingTemplate.convertAndSendToUser(message.getReceiver().getId().toString(), "/private",  messageDTOConverter.convertFromEntity(message));
+
+            chatRepository.save(message);
+
+            return ResponseEntity.ok().body("ok");
+
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar la solicitud: " + e.getMessage());
+        }
+
+    }
+
+    @GetMapping("/acceptOffer/{id}/{id2}/{senderId}/{receiverId}")
+    public ResponseEntity<?> confirmar( @PathVariable Long id,  @PathVariable Long id2, @PathVariable Long senderId, @PathVariable Long receiverId ) {
+
+
+        try {
+
+            MessageEntity message = new MessageEntity();
+
+            Date today = new Date();
+
+            message.setDate(formatDate(today));
+
+            UserEntity senderUser = userRepository.findById(senderId).orElse(null);
+            UserEntity receiverUser = userRepository.findById(receiverId).orElse(null);
+
+
+            message.setSender( senderUser.getCustomerEntity());
+
+            message.setReceiver(receiverUser.getCustomerEntity());
+
+            message.setStatus(Status.MESSAGE);
+
+            ReservationEntity reservation = reservationRepository.findById(id).orElse(null);
+
+            String mensaje = "Perfecto, ¡reserva confirmada!  <br> ";
+
+
+            message.setMessage(mensaje) ;
+
+            reservation.setType("confirmed");
+
+            reservationRepository.save(reservation);
+
+            ReservationEntity reservation2 = reservationRepository.findById(id2).orElse(null);
+
+            reservation2.setType("confirmed");
+
+            reservationRepository.save(reservation2);
+
+            simpMessagingTemplate.convertAndSendToUser(message.getReceiver().getId().toString(), "/private",  messageDTOConverter.convertFromEntity(message));
+
+            chatRepository.save(message);
+
+            PropertyEntity property1 = reservation.getReservationProperty();
+            PropertyEntity property2 = reservation2.getReservationProperty();
+
+            property1.getCalendar().getReservedDates().add(reservation.getDateStart());
+            property1.getCalendar().getReservedDates().add(reservation.getDateEnd());
+
+            property2.getCalendar().getReservedDates().add(reservation2.getDateStart());
+            property2.getCalendar().getReservedDates().add(reservation2.getDateEnd());
+
+            propertyRepository.save(property1);
+
+            propertyRepository.save(property2);
+
+
+
+            return ResponseEntity.ok().body("ok");
+
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar la solicitud: " + e.getMessage());
+        }
+
+    }
+
+
 
 
 
