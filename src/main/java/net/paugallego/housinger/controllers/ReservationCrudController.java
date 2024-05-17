@@ -149,6 +149,96 @@ public class ReservationCrudController extends AbstractController<ReservationEnt
         }
     }
 
+    @PostMapping("/contraOffert")
+    public ResponseEntity<?> acceptOffert ( @RequestBody ReservationDTO dto, @RequestParam Long previusId) {
+        try {
+
+            System.out.println(previusId);
+
+            MessageEntity message = new MessageEntity();
+
+            Date today = new Date();
+
+            message.setDate(formatDate(today));
+
+            //User que lo manda
+            UserEntity proproserUser = userRepository.findById(dto.getReservationUserId()).orElse(null);
+
+            //Propeidad que quiere
+            PropertyEntity proposerProperty = propertyRepository.findById(dto.getReservationPropertyId()).orElse(null);
+
+            assert proproserUser != null;
+            message.setSender( proproserUser.getCustomerEntity());
+
+            assert proposerProperty != null;
+            message.setReceiver(proposerProperty.getUser().getCustomerEntity());
+
+            message.setStatus(Status.MESSAGE);
+
+            Date dateStart = dto.getDateStart();
+            Date dateEnd = dto.getDateEnd();
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+            String formattedDateStart = dateFormat.format(dateStart);
+            String formattedDateEnd = dateFormat.format(dateEnd);
+
+
+            ReservationEntity reservation = new ReservationEntity();
+            reservation.setReservationProperty(proposerProperty);
+            reservation.setReservationUser(proproserUser);
+            reservation.setDateEnd(dateEnd);
+            reservation.setDateStart(dateStart);
+            reservation.setType("proposal");
+
+
+            List<ReservationEntity> reservaciones = reservationRepository.findByReservationPropertyAndReservationUserAndType(proposerProperty, proproserUser, "proposal").orElse(null);
+
+            for (ReservationEntity entity: reservaciones){
+
+                reservationRepository.delete(entity);
+            }
+
+            reservationRepository.save(reservation);
+
+
+
+            ReservationDTO dtoRes = dtoConverter.convertFromEntity(reservation);
+
+
+            String mensaje = "A cambio, te propongo tu propiedad ubicada en <br>  "
+                    + proposerProperty.getAddress()
+                    + "  <br> entre las fechas de: "
+                    + formattedDateStart
+                    + " - "
+                    + formattedDateEnd;
+
+            mensaje += " <br> <a   href=" + url + "/seeProposal?id=" + dtoRes.getId() + "?id2= " + previusId +  " " + " class="  +"font-bold text-sky-500>";
+
+
+            mensaje += "Ver Propuesta " ;
+
+            mensaje += "</a>";
+
+            message.setMessage(mensaje) ;
+
+
+
+            simpMessagingTemplate.convertAndSendToUser(message.getReceiver().getId().toString(), "/private", messageDTOConverter.convertFromEntity(message));
+
+
+            chatRepository.save(message);
+
+            return ResponseEntity.ok().body(dtoRes);
+
+
+
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar la solicitud: " + e.getMessage());
+        }
+    }
+
     @GetMapping("/declineOffer/{id}/{senderId}/{receiverId}")
     public ResponseEntity<?> sendMessage( @PathVariable Long id, @PathVariable Long senderId, @PathVariable Long receiverId ) {
 
