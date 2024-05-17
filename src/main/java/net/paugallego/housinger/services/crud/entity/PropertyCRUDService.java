@@ -39,6 +39,9 @@ public class PropertyCRUDService extends AbstractCRUDService<PropertyEntity, Pro
     @Autowired
     CalendarRepository repo6;
 
+    @Autowired
+    ReservationDTOConverter reservationDTOConverter;
+
 
     public PropertyDTO createnewById(Long id, String address){
 
@@ -103,6 +106,17 @@ public class PropertyCRUDService extends AbstractCRUDService<PropertyEntity, Pro
             ex.printStackTrace();
             return null;
         }
+    }
+
+
+    public List<ReservationDTO> findByUser(Long id){
+
+        UserEntity user = repo.findById(id).orElse(null);
+
+        List<ReservationEntity> resevations = repo5.findByReservationUser(user);
+
+        return  reservationDTOConverter.convertFromEntities(resevations);
+
     }
 
 

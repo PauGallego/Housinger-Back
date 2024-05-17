@@ -51,6 +51,10 @@ public class ReservationCrudController extends AbstractController<ReservationEnt
     @Autowired
     MessageDTOConverter messageDTOConverter;
 
+
+
+
+
     @Value("${spring.default.url2}")
     private String url;
 
@@ -409,7 +413,21 @@ public class ReservationCrudController extends AbstractController<ReservationEnt
 
 
 
+    @GetMapping("/getUser/{id}")
+    public ResponseEntity<?> getByUser (@PathVariable Long id) {
+        try {
+
+            UserEntity user = userRepository.findById(id).orElse(null);
+
+            List<ReservationDTO> dtos = dtoConverter.convertFromEntities(reservationRepository.findByReservationUser(user)) ;
+
+            return ResponseEntity.ok().body(dtos);
 
 
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar la solicitud: " + e.getMessage());
+        }
+
+    }
 
 }

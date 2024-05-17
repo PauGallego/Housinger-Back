@@ -61,6 +61,9 @@ public class ReservationDTOConverter extends AbstractDTOConverter<ReservationEnt
         dto.setReceiverUserId(entity.getReservationProperty().getUser().getId());
         dto.setType(entity.getType());
         dto.setReservationCustomerId(entity.getReservationUser().getCustomerEntity().getId());
+        dto.setReceiverUserName(entity.getReservationProperty().getUser().getCustomerEntity().getName());
+        dto.setReceiverUserSurname(entity.getReservationProperty().getUser().getCustomerEntity().getSurname());
+        dto.setReceiverPicture(entity.getReservationProperty().getUser().getCustomerEntity().getPicture());
 
         return dto;
     }

@@ -13,6 +13,8 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
     List<ReservationEntity> findByReservationProperty(PropertyEntity property);
     Optional<List<ReservationEntity>> findByReservationPropertyAndReservationUserAndType(PropertyEntity property, UserEntity user, String type);
 
+    List<ReservationEntity> findByReservationUser(UserEntity user);
+
 
 
 

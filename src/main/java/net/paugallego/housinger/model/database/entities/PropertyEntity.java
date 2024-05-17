@@ -27,6 +27,7 @@ public class PropertyEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "type_id", referencedColumnName = "id")
     private TypeEntity type;
+    @Column(columnDefinition = "TEXT")
     private String description;
     @ElementCollection
     private List<String> fotos;

@@ -25,6 +25,10 @@ public class ReservationDTO {
     private Long receiverUserId;
     private String type;
     private Long reservationCustomerId;
+    private String receiverUserName;
+    private String receiverUserSurname;
+    private String receiverPicture;
+
 
 
 }
