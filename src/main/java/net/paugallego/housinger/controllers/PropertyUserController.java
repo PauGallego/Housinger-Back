@@ -37,6 +37,7 @@ public class PropertyUserController {
         }
     }
 
+
     @GetMapping("/getCustomer/{userId}")
     public ResponseEntity<?> getByDTOCustomer(@PathVariable("userId") Long id) {
         try {
