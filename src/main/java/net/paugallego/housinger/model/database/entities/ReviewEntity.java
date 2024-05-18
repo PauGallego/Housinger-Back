@@ -23,6 +23,7 @@ public class ReviewEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "reviewProperty_id", referencedColumnName = "id")
     private PropertyEntity reviewProperty;
+    @Column(columnDefinition = "TEXT")
     private String description;
     private Date date;
     private Float starts;
