@@ -143,6 +143,11 @@
         let password = document.getElementById('password').value;
         let password2 = document.getElementById('password2').value;
 
+        if (password.length < 8) {
+            errorMensaje.innerText = 'La contraseña debe tener al menos 8 caracteres';
+            return;
+        }
+
         if (password !== password2) {
             errorMensaje.innerText = 'Las contraseñas no coinciden';
             return;
