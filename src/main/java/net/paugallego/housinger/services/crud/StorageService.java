@@ -108,7 +108,6 @@ public class StorageService {
 
     public byte[] downloadImageFromFileSystemCustomer(String fileName) throws IOException {
         File file = new File(FOLDER_PATH + fileName);
-        System.out.printf(file.getAbsolutePath());
         if (file.exists()) {
             return Files.readAllBytes(file.toPath());
         }

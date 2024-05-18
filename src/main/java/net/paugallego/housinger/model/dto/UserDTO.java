@@ -35,4 +35,5 @@ public class UserDTO {
     private String name;
     private String surname;
     private String picture;
+    private String dni;
 }
