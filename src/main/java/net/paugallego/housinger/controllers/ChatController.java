@@ -2,6 +2,7 @@ package net.paugallego.housinger.controllers;
 
 import net.paugallego.housinger.model.database.entities.CustomerEntity;
 import net.paugallego.housinger.model.database.entities.MessageEntity;
+import net.paugallego.housinger.model.database.entities.ReservationEntity;
 import net.paugallego.housinger.model.database.repositories.ChatRepository;
 import net.paugallego.housinger.model.database.repositories.CustomerRepository;
 import net.paugallego.housinger.model.dto.MessageDTO;
@@ -12,6 +13,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Controller
@@ -48,6 +50,10 @@ public class ChatController {
 
                 MessageEntity messageEntity = dtoConverter.convertFromDTO(message);
 
+                Date today = new Date();
+
+                messageEntity.setDate(formatDate(today));
+
                 chatRepository.save(messageEntity);
             } else {
                 System.out.println("Receiver not found for message: " + message);
@@ -55,6 +61,11 @@ public class ChatController {
         } else {
             System.out.println("Invalid receiver or receiver ID is null for message: " + message);
         }
+    }
+
+    public static String formatDate(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/M/yyyy, HH:mm:ss");
+        return formatter.format(date);
     }
 
 
