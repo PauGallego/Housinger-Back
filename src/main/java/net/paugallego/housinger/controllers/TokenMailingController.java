@@ -73,7 +73,10 @@ public class TokenMailingController {
             if (Objects.equals(entity.getType(), "password")) {
                 String htmlContent = "";
                 try {
-                    htmlContent = new String(Files.readAllBytes(Paths.get("src/main/resources/static/changepass.html")));
+
+                    Resource resource = new ClassPathResource("static/changepass.html");
+                    byte[] bytes = Files.readAllBytes(resource.getFile().toPath());
+                    htmlContent = new String(bytes);
                     htmlContent = htmlContent.replace("{{userId}}", String.valueOf(entity.getUserEntity().getId()));
                     htmlContent = htmlContent.replace("{{userName}}", String.valueOf(entity.getUserEntity().getUsername()));
                     htmlContent = htmlContent.replace("{{url}}", url);

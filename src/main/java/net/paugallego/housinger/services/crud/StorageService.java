@@ -48,8 +48,6 @@ public class StorageService {
                     } else {
                         System.err.println("Failed to delete old file: " + oldFileName);
                     }
-                } else {
-                    System.out.println("Old file does not exist: " + oldFileName);
                 }
             }
 
@@ -123,8 +121,6 @@ public class StorageService {
                 } else {
                     System.err.println("Failed to delete file: " + fileName);
                 }
-            } else {
-                System.out.println("File does not exist: " + fileName);
             }
         }
     }
