@@ -23,10 +23,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 import java.util.UUID;
 
 
@@ -59,39 +62,49 @@ public class TokenMailingController {
     public PasswordEncoder getPasswordEncoder() {
         return passwordEncoder;
     }
-
     @GetMapping("/recover/{token}")
-    public ResponseEntity<?> recover(@PathVariable String token) {
+    public ResponseEntity<?> recover(@PathVariable String token) throws IOException {
         try {
             TokenMailingEntity entity = repository.findByToken(token).orElse(null);
 
             if (entity == null) {
                 Resource resource = new ClassPathResource("static/error.html");
-                return ResponseEntity.ok().body(resource);
+                String errorContent = readResourceAsString(resource);
+                return ResponseEntity.ok().body(errorContent);
             }
 
             if (Objects.equals(entity.getType(), "password")) {
                 String htmlContent = "";
                 try {
-
                     Resource resource = new ClassPathResource("static/changepass.html");
-                    byte[] bytes = Files.readAllBytes(resource.getFile().toPath());
-                    htmlContent = new String(bytes);
+                    htmlContent = readResourceAsString(resource);
                     htmlContent = htmlContent.replace("{{userId}}", String.valueOf(entity.getUserEntity().getId()));
                     htmlContent = htmlContent.replace("{{userName}}", String.valueOf(entity.getUserEntity().getUsername()));
                     htmlContent = htmlContent.replace("{{url}}", url);
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Resource errorResource = new ClassPathResource("static/error.html");
+                    String errorContent = readResourceAsString(errorResource);
+                    return ResponseEntity.ok().body(errorContent);
                 }
                 return ResponseEntity.ok().body(htmlContent);
             } else {
                 Resource resource = new ClassPathResource("static/error.html");
-                return ResponseEntity.ok().body(resource);
+                String errorContent = readResourceAsString(resource);
+                return ResponseEntity.ok().body(errorContent);
             }
         } catch (Exception e) {
             e.printStackTrace();
             Resource resource = new ClassPathResource("static/error.html");
-            return ResponseEntity.ok().body(resource);
+            String errorContent = readResourceAsString(resource);
+            return ResponseEntity.ok().body(errorContent);
+        }
+    }
+
+    private String readResourceAsString(Resource resource) throws IOException {
+        try (InputStream inputStream = resource.getInputStream();
+             Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8)) {
+            return scanner.useDelimiter("\\A").next();
         }
     }
 
