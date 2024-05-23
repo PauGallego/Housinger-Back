@@ -19,6 +19,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -438,9 +439,10 @@ public class ReservationCrudController extends AbstractController<ReservationEnt
     }
 
     @DeleteMapping("/deleteTrue/{id}")
-    public ResponseEntity<?> truedelete(@PathVariable Long id) {
+    public ResponseEntity<?> deleteReservation(@PathVariable Long id) {
         try {
-            ReservationEntity reservation = reservationRepository.findById(id).orElse(null);
+            ReservationEntity reservation = reservationRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Reservation not found with id: " + id));
+
             Date today = new Date();
             Calendar threeDaysLater = Calendar.getInstance();
             threeDaysLater.setTime(today);
@@ -448,20 +450,16 @@ public class ReservationCrudController extends AbstractController<ReservationEnt
 
             ReservationEntity reservationEntity2 = reservationRepository.findByReservationUserAndConfirmationDate(reservation.getReservationProperty().getUser(), reservation.getConfirmationDate());
 
-
-            if (reservation.getDateStart().before(threeDaysLater.getTime()) || reservation.getDateEnd().before(today) || reservationEntity2.getDateStart().before(threeDaysLater.getTime()) || reservationEntity2.getDateEnd().before(today) )   {
-
-                return ResponseEntity.badRequest().body("no");
+            if ((reservation.getDateStart().before(threeDaysLater.getTime()) && reservation.getDateEnd().after(today)) || reservationEntity2.getDateStart().before(threeDaysLater.getTime()) || reservationEntity2.getDateEnd().before(today)) {
+                return ResponseEntity.badRequest().body("No se puede eliminar la reserva debido a reservas activas o próximas.");
             }
 
             PropertyEntity property = reservation.getReservationProperty();
-
             List<Date> reservedDates = property.getCalendar().getReservedDates();
             reservedDates.removeIf(date -> date.equals(reservation.getDateStart()) || date.equals(reservation.getDateEnd()));
             propertyRepository.save(property);
 
             PropertyEntity property2 = reservationEntity2.getReservationProperty();
-
             List<Date> reservedDates2 = property2.getCalendar().getReservedDates();
             reservedDates2.removeIf(date -> date.equals(reservationEntity2.getDateStart()) || date.equals(reservationEntity2.getDateEnd()));
             propertyRepository.save(property2);
@@ -470,37 +468,24 @@ public class ReservationCrudController extends AbstractController<ReservationEnt
             reservationRepository.delete(reservationEntity2);
 
             MessageEntity message = new MessageEntity();
-
             message.setDate(formatDate(today));
-
             UserEntity senderUser = reservation.getReservationUser();
             UserEntity receiverUser = reservationEntity2.getReservationUser();
-
-
-            message.setSender( senderUser.getCustomerEntity());
-
+            message.setSender(senderUser.getCustomerEntity());
             message.setReceiver(receiverUser.getCustomerEntity());
-
             message.setStatus(Status.MESSAGE);
-
             String mensaje = "He decidido cancelar nuestra reserva pendiente en la direccion:</br>";
-
             mensaje += reservation.getReservationProperty().getAddress();
-
             message.setMessage(mensaje);
-
-            simpMessagingTemplate.convertAndSendToUser(message.getReceiver().getId().toString(), "/private",  messageDTOConverter.convertFromEntity(message));
-
+            simpMessagingTemplate.convertAndSendToUser(message.getReceiver().getId().toString(), "/private", messageDTOConverter.convertFromEntity(message));
             chatRepository.save(message);
 
-            return ResponseEntity.ok().body("donete");
-
-
+            return ResponseEntity.ok().body("Reserva eliminada correctamente.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar la solicitud: " + e.getMessage());
         }
-
     }
+
 
 
 }
