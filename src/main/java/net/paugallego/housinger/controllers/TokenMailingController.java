@@ -198,8 +198,33 @@ public class TokenMailingController {
 
             mailService.sendMail(user.getMail(),
                     "Housinger: Modifica tu contraseña!",
-                    "<p>Accede al siguiente enlace para modificarla: " +
-                            "<a href=\"" + url + "/v1/recover/" + token2 + "\">Modificar</a></p>");
+                    "<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"#A5D7E8\" style=\"padding: 20px; border-radius: 10px; margin-top: 20px; margin-bottom: 20px;\">" +
+                            "<tr>" +
+                            "<td align=\"center\">" +
+                            "<p style=\"margin-bottom: 20px;\">Accede al siguiente enlace para modificarla: " +
+                            "<a href=\"" + url + "/v1/recover/" + token2 + "\" style=\"color: black; text-decoration: none;\">Modificar</a>" +
+                            "</p>" +
+                            "</td>" +
+                            "</tr>" +
+                            "<tr>" +
+                            "<td align=\"center\">" +
+                            "<table cellspacing=\"0\" cellpadding=\"0\">" +
+                            "<tr>" +
+                            "<td style=\"padding-right: 10px;\">" +
+                            "<img src=\"https://housingerapi.paugallego.com/v1/fileCustomer/download/logo.png\" alt=\"logo\" width=\"150\" height=\"auto\" style=\"margin-right: 10px;\" />" +
+                            "</td>" +
+                            "<td style=\"font-size: 24px; color: #7189E9;\">" +
+                            "<strong>HOUSINGER</strong>" +
+                            "</td>" +
+                            "</tr>" +
+                            "</table>" +
+                            "</td>" +
+                            "</tr>" +
+                            "</table>");
+
+
+
+
 
 
 

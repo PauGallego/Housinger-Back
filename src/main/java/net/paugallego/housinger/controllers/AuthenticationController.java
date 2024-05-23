@@ -79,8 +79,33 @@ public class AuthenticationController {
 
             mailService.sendMail(userDTO.getMail(),
                     "Housinger: Activa tu cuenta!",
-                    "<p>Cuenta creada con éxito, accede al siguiente enlace para activarla: " +
-                            "<a href=\"" + url + "/v1/enable/" + token + "\">Activar cuenta</a></p>");
+                    "<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"#A5D7E8\" style=\"padding: 20px; border-radius: 10px; margin-top: 20px; margin-bottom: 20px;\">" +
+                            "<tr>" +
+                            "<td align=\"center\">" +
+                            "<p style=\"text-align: center; margin-bottom: 20px;\">Cuenta creada con éxito, accede al siguiente enlace para activarla: " +
+                            "<a href=\"" + url + "/v1/enable/" + token + "\" style=\"color: black; text-decoration: none;\">Activar cuenta</a></p>" +
+                            "</td>" +
+                            "</tr>" +
+                            "<tr>" +
+                            "<td align=\"center\">" +
+                            "<table cellspacing=\"0\" cellpadding=\"0\">" +
+                            "<tr>" +
+                            "<td style=\"padding-right: 10px;\">" +
+                            "<img src=\"https://housingerapi.paugallego.com/v1/fileCustomer/download/logo.png\" alt=\"logo\" width=\"150\" height=\"auto\" style=\"margin-right: 10px;\" />" +
+                            "</td>" +
+                            "<td style=\"font-size: 24px; color: #7189E9;\">" +
+                            "<strong>HOUSINGER</strong>" +
+                            "</td>" +
+                            "</tr>" +
+                            "</table>" +
+                            "</td>" +
+                            "</tr>" +
+                            "</table>");
+
+
+
+
+
 
             response = ResponseEntity.status(HttpStatus.OK).body(user);
         } catch (DataIntegrityViolationException e) {

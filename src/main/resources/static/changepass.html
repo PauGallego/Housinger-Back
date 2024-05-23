@@ -19,7 +19,7 @@
 
         /* Header Styles */
         .contendor-header {
-            background-color: #a5d7e8;
+            background-color: #A5D7E8;
             height: 150px;
             width: 100%;
             display: flex;
@@ -107,12 +107,20 @@
             border-bottom-right-radius: 5px;
         }
 
+        .flex{
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            margin-left: 20px;
+        }
+
     </style>
 </head>
 <body>
 <div class="contendor-header">
-    <div>
-        <h2 class="titulo-logo">HOUSINGER</h2>
+    <div class="ml-5 md:ml-10 flex justify-start items-center">
+        <img class="h-[50px] md:h-[60px] w-auto" src="https://housingerapi.paugallego.com/v1/fileCustomer/download/logo.png" alt="logo">
+        <h2 class="titulo-logo text-[20px] md:text-[28px] md:mt-5 font-bold">HOUSINGER</h2>
     </div>
 </div>
 <h2>Cambio de contraseña</h2>
