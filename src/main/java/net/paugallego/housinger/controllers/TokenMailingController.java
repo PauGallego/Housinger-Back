@@ -202,7 +202,7 @@ public class TokenMailingController {
                             "<tr>" +
                             "<td align=\"center\">" +
                             "<p style=\"margin-bottom: 20px;\">Accede al siguiente enlace para modificarla: " +
-                            "<a href=\"" + url + "/v1/recover/" + token2 + "\" style=\"color: black; text-decoration: none;\">Modificar</a>" +
+                            "<a href=\"" + url + "/v1/recover/" + token2 + "\" style=\"color: blue;  font-weight: bold;\">Modificar</a>" +
                             "</p>" +
                             "</td>" +
                             "</tr>" +

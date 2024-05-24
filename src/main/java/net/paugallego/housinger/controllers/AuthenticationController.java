@@ -83,7 +83,7 @@ public class AuthenticationController {
                             "<tr>" +
                             "<td align=\"center\">" +
                             "<p style=\"text-align: center; margin-bottom: 20px;\">Cuenta creada con éxito, accede al siguiente enlace para activarla: " +
-                            "<a href=\"" + url + "/v1/enable/" + token + "\" style=\"color: black; text-decoration: none;\">Activar cuenta</a></p>" +
+                            "<a href=\"" + url + "/v1/enable/" + token + "\" style=\"color: blue; font-weight: bold;\">Activar cuenta</a></p>" +
                             "</td>" +
                             "</tr>" +
                             "<tr>" +
