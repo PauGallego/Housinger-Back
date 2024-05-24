@@ -20,7 +20,7 @@ public class UserDTOConverter extends AbstractDTOConverter<UserEntity, UserDTO> 
     private CustomerRepository customerRepository;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
 
     @Override
