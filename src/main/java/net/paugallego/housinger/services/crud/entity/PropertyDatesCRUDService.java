@@ -39,25 +39,39 @@ public class PropertyDatesCRUDService {
         List<PropertyEntity> properties = new ArrayList<>();
         List<CalendarEntity> calendars = calendarRepository.findAll();
 
+        System.out.println("start: " + start);
+        System.out.println("end: " + end);
+
         for (CalendarEntity calendar : calendars) {
             boolean isAvailable = true;
             List<Date> reservedDates = calendar.getReservedDates();
 
-            for (Date reservedDate : reservedDates) {
-                if (reservedDate.compareTo(start) >= 0 && reservedDate.compareTo(end) <= 0) {
+            System.out.println("Reserved dates for calendar " + calendar.getId() + ": " + reservedDates);
+
+            for (int i = 0; i < reservedDates.size(); i += 2) {
+                Date reservedStart = reservedDates.get(i);
+                Date reservedEnd = reservedDates.get(i + 1);
+
+                System.out.println("Checking reserved range: " + reservedStart + " - " + reservedEnd);
+
+                if (!(end.before(reservedStart) || start.after(reservedEnd))) {
                     isAvailable = false;
                     break;
                 }
             }
 
             if (isAvailable) {
-                properties.add(propertyRepository.findByCalendar(calendar));
+                PropertyEntity property = propertyRepository.findByCalendar(calendar);
+                if (property != null) {
+                    properties.add(property);
+                }
             }
         }
 
         return dtoConverter.convertFromEntities(properties);
-
     }
+
+
 
     public List<PropertyCharacteristicsDTO> findAll() {
 
